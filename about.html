@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How We Built It - Marathon &amp; More Calculator</title>
+<meta name="description" content="The math, the variables, and the runner types behind the Marathon and More Calculator. Riegel formula, exponent range, and why one size doesn't fit all marathoners.">
+<meta name="keywords" content="Riegel formula, marathon prediction math, race time prediction, marathon exponent, runner types, marathon pacing strategy, open source running calculator">
+<link rel="canonical" href="https://marathoncalculator.com/about.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How We Built It - Marathon &amp; More Calculator">
+<meta property="og:description" content="The math, the variables, and the runner types behind the Marathon and More Calculator.">
+<meta property="og:url" content="https://marathoncalculator.com/about.html">
+<meta property="og:image" content="https://marathoncalculator.com/images/founder-running.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How We Built the Marathon & More Calculator","description":"The math, the variables, and the runner types behind the calculator.","author":{"@type":"Organization","name":"MarathonCalculator.com"},"publisher":{"@type":"Organization","name":"MarathonCalculator.com"},"image":"https://marathoncalculator.com/images/founder-running.jpg","mainEntityOfPage":"https://marathoncalculator.com/about.html"}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F1; --card:#FFFFFF; --ink:#121A22; --muted:#5C6672;
+    --line:#E2E5DD; --blue:#2447C7; --blue-deep:#16307F; --blue-soft:#E9EDFB;
+    --tape:#FFD23F;
+    --disp:"Barlow Semi Condensed","Arial Narrow",sans-serif;
+    --body:"Barlow",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); font-size:16.5px; line-height:1.6}
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 72px}
+
+  header{padding:28px 0 20px; border-bottom:3px solid var(--ink); margin-bottom:8px; position:relative}
+  header::after{content:""; position:absolute; left:0; right:0; bottom:-8px; height:3px; background:var(--blue)}
+  .brand{font-family:var(--disp); font-weight:800; font-size:clamp(24px,5vw,32px); letter-spacing:.5px; text-transform:uppercase; line-height:1}
+  .brand a{color:inherit; text-decoration:none}
+  .brand em{font-style:normal; color:var(--blue)}
+  nav{margin-top:8px; font-size:15px}
+  nav a{color:var(--blue); font-weight:600; text-decoration:none; margin-right:16px}
+  nav a:hover{text-decoration:underline}
+
+  h1{font-family:var(--disp); font-weight:800; text-transform:uppercase; font-size:clamp(28px,6vw,38px); line-height:1.1; margin:34px 0 6px}
+  .lede{color:var(--muted); font-size:18px; margin:0 0 8px}
+  h2{font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.8px; font-size:17px; margin:38px 0 10px; border-bottom:2px solid var(--ink); padding-bottom:6px}
+  p{margin:0 0 14px}
+  .formula{
+    font-family:ui-monospace, Menlo, Consolas, monospace; font-size:17px;
+    background:var(--card); border:1.5px solid var(--ink); border-radius:10px;
+    padding:14px 18px; text-align:center; margin:16px 0;
+  }
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:15px}
+  th{font-family:var(--disp); text-transform:uppercase; letter-spacing:.5px; font-size:12.5px; color:var(--muted); text-align:left; padding:8px 10px; border-bottom:2px solid var(--ink)}
+  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+  td b{font-family:var(--disp); letter-spacing:.2px}
+
+  .archetype{
+    background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .archetype h3{font-family:var(--disp); font-weight:800; font-size:19px; margin:0 0 4px; letter-spacing:.3px}
+  .archetype .slider-tip{
+    display:inline-block; font-family:var(--disp); font-weight:700; font-size:13px;
+    letter-spacing:.4px; color:var(--blue-deep); background:var(--blue-soft);
+    border-radius:6px; padding:3px 10px; margin-bottom:8px;
+  }
+  .archetype p{margin:0; font-size:15.5px}
+  .archetype.founder{border-color:var(--blue); border-width:2px; position:relative}
+  .archetype.founder::before{
+    content:"The founder's type"; position:absolute; top:-11px; left:14px;
+    font-family:var(--disp); font-weight:700; font-size:12px; letter-spacing:.6px;
+    text-transform:uppercase; background:var(--tape); border-radius:4px; padding:2px 8px;
+  }
+
+  figure{margin:18px 0}
+  figure img{width:100%; height:auto; display:block; border-radius:12px; border:1.5px solid var(--line)}
+  figcaption{font-size:13.5px; color:var(--muted); margin-top:6px; text-align:center}
+
+  .callout{
+    background:var(--blue-soft); border-left:4px solid var(--blue);
+    border-radius:0 10px 10px 0; padding:14px 18px; margin:18px 0; font-size:15.5px;
+  }
+  .cta{
+    display:inline-block; font-family:var(--disp); font-weight:700; font-size:17px;
+    letter-spacing:.4px; background:var(--blue); color:#fff; text-decoration:none;
+    padding:12px 24px; border-radius:8px; margin-top:6px;
+  }
+  .cta:hover{background:var(--blue-deep)}
+  footer{margin-top:44px; font-size:13.5px; color:var(--muted); text-align:center; border-top:1px solid var(--line); padding-top:16px}
+  footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand"><a href="index.html">Marathon <em>&amp; More</em> Calculator</a></div>
+    <nav>
+      <a href="index.html">Calculator</a>
+      <a href="about.html" aria-current="page">How we built it</a>
+      <a href="/marathoncalculator/">About us</a>
+      <a href="https://github.com/YOUR-GITHUB/marathon-calculator">Source on GitHub</a>
+    </nav>
+  </header>
+
+  <h1>How We Built It</h1>
+  <p class="lede">The math, the variables, and an honest accounting of why one
+  formula can't fit every marathoner. Built by a runner with 40+ years on the
+  roads, open sourced for anyone to inspect, use, or improve.</p>
+
+  <h2>Why we built it</h2>
+  <figure>
+    <img src="images/founder-running.jpg" width="980" height="800"
+         alt="The founder mid-stride on a canal path with desert mountains behind him">
+    <figcaption>The founder on a race morning along the canal. 40+ years of running,
+    20+ marathon finishes, and still chasing it.</figcaption>
+  </figure>
+  <p>Most race predictors give you one number and a lot of confidence. Runners know
+  better. Two people with the same 5K time can finish a marathon half an hour apart,
+  and the difference usually isn't talent. It's training, pacing, and how you handle
+  the start. We wanted a calculator that admits this instead of hiding it, and that
+  helps you plan the race you're actually going to run.</p>
+
+  <h2>The core math</h2>
+  <p>Pace and time are simple arithmetic: time equals distance times pace. The split
+  table is that math applied mile by mile (or kilometer by kilometer), including
+  mid-mile pace changes when you build a segment strategy.</p>
+  <p>Race equivalency uses the <b>Riegel formula</b>, published by Peter Riegel in
+  1977 and still the backbone of most race predictors:</p>
+  <div class="formula">T&#8322; = T&#8321; &times; (D&#8322; / D&#8321;)<sup>exponent</sup></div>
+  <p>Take a time you've run (T&#8321;) at one distance (D&#8321;), and it predicts
+  your time (T&#8322;) at another distance (D&#8322;). The exponent is where all the
+  interesting disagreement lives.</p>
+
+  <h2>The variables</h2>
+  <table>
+    <thead><tr><th>Variable</th><th>What it is</th><th>Where it comes from</th></tr></thead>
+    <tbody>
+      <tr><td><b>Distance</b></td><td>Marathon first (26.2 mi / 42.195 km), with half, 10K, 5K, and custom options.</td><td>You pick it.</td></tr>
+      <tr><td><b>Goal time or pace</b></td><td>Enter either; the other is computed.</td><td>You enter it.</td></tr>
+      <tr><td><b>Segments</b></td><td>Up to 5 blocks of the race at different paces. The last segment always auto-fills the remaining distance.</td><td>Your race strategy.</td></tr>
+      <tr><td><b>Riegel exponent</b></td><td>How much you slow down as distance grows. 1.06 is the classic textbook value.</td><td>The runner profile slider, 1.04 to 1.12.</td></tr>
+      <tr><td><b>Units</b></td><td>Miles or kilometers, converted throughout.</td><td>One toggle.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Why our exponent range is wider than the textbook</h2>
+  <p>Most calculators use 1.06 and stop there. That value assumes you've done the
+  training the longer distance demands: the weekly mileage and, above all, the long
+  runs. Research on recreational marathoners tells a different story. Large-scale
+  studies have found that runners with low mileage or few long runs behave like an
+  exponent of 1.10 to 1.15 when predicting a marathon from a shorter race. They
+  don't lack speed. They fade.</p>
+  <div class="callout">
+    A concrete example from our own founder: a 21-minute 5K predicts a 3:21 marathon
+    at the textbook exponent. His reality was 3:25 on a great day and 3:40 was not
+    unusual, because his training topped out around half marathon distance. That's
+    an exponent near 1.09-1.11, and it's why our slider goes to 1.12 on the
+    "speed favoring" side while holding 1.04 on the endurance side.
+  </div>
+  <p>The slider is really asking one honest question: <b>did you do the training,
+  or are you going to gut it out on shorter-race fitness?</b> Both are legitimate
+  ways to run a marathon. Only one of them should trust the textbook number.</p>
+
+  <h2>It starts with how you start</h2>
+  <p>The marathon punishes a fast start more than any other race. Going out ahead
+  of goal pace to "bank time" is the most common way to turn the last 10K into a
+  death march: the energy cost of early speed comes due with interest. That's why
+  the calculator is built around split strategy, not just a finish time. Even
+  splits are the gold standard. A controlled start with a planned finish surge is
+  the realistic alternative. Banking time is not a plan.</p>
+
+  <h2>Runner types</h2>
+  <p>No two marathoners run the same race. Here are the profiles we designed for.
+  Find yours, and the slider setting that matches.</p>
+
+  <div class="archetype founder">
+    <h3>The Short-Distance Specialist</h3>
+    <span class="slider-tip">Slider: left of center (exponent 1.09-1.12)</span>
+    <p>Fast 5K and 10K times, comfortable at the half, but training rarely goes past
+    13.1. Race day is an exercise in holding on. Capable of a great marathon on the
+    right day, but the fade is real and the textbook prediction is a trap. This is
+    our founder: 40+ years of running, quick short-race times, and marathons run on
+    grit more than long-run mileage.</p>
+  </div>
+
+  <div class="archetype">
+    <h3>The Endurance Monster</h3>
+    <span class="slider-tip">Slider: right of center (exponent 1.04-1.05)</span>
+    <p>High weekly mileage, long runs on the calendar all year. Their 5K might be
+    nothing special, but their marathon pace barely drifts from their half pace.
+    They pass the specialists at mile 22, looking annoyingly comfortable.</p>
+  </div>
+
+  <div class="archetype">
+    <h3>The Balanced Club Runner</h3>
+    <span class="slider-tip">Slider: center (exponent 1.06)</span>
+    <p>Follows a standard plan: a weekly long run, a bit of speed work, sensible
+    mileage. The textbook exponent was basically built for this runner, and for
+    them it works well.</p>
+  </div>
+
+  <div class="archetype">
+    <h3>The First-Timer</h3>
+    <span class="slider-tip">Slider: left of center, and plan conservative segments</span>
+    <p>The goal is to finish strong, not to chase a number. Best served by a plan
+    that starts slower than feels necessary, with the option of a faster final
+    segment if the day goes well. The first marathon teaches you which type you are.</p>
+  </div>
+
+  <div class="archetype">
+    <h3>The Comeback Runner</h3>
+    <span class="slider-tip">Slider: left of where you used to set it</span>
+    <p>Fitness from a previous life, current training that hasn't caught up yet.
+    Old race times overpredict badly. Enter a recent race, not a memory, and be
+    honest with the slider.</p>
+  </div>
+
+  <p>Think we missed a type, or disagree with a setting? Good. That's what open
+  source is for.</p>
+
+  <figure>
+    <img src="images/next-generation.jpg" width="1400" height="946"
+         alt="A young runner in sunglasses leading a pack of adults at a 5K race in the desert">
+    <figcaption>The next generation, already out front at a local 5K. This is who
+    we're building for: every runner, at every stage.</figcaption>
+  </figure>
+
+  <h2>Open source, no strings</h2>
+  <p>The whole calculator is plain HTML, CSS, and JavaScript in a single file. No
+  frameworks, no build step, no tracking, no ads, no signup. It's MIT licensed:
+  use it, copy it, embed it on your site, improve it. If you find a bug or think
+  the math should work differently, open an issue or a pull request.</p>
+  <p>
+    <a class="cta" href="index.html">Try the calculator</a>
+    &nbsp;
+    <a class="cta" style="background:#fff;color:var(--blue);border:2px solid var(--blue)" href="https://github.com/YOUR-GITHUB/marathon-calculator">View the source</a>
+  </p>
+
+  <footer>
+    <a href="https://marathoncalculator.com">MarathonCalculator.com</a> ·
+    free &amp; open source · built by a runner, for runners
+  </footer>
+</div>
+</body>
+</html>

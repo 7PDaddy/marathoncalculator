@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marathoncalculator.com/sitemap.xml
