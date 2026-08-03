@@ -1,0 +1,12 @@
+# Old WordPress structure -> new static site
+/category/* / 301
+/author/* / 301
+/page/* / 301
+/2026/06/ /marathon-mindset-boom-and-bust/ 301
+/2025/12/ /2026-goals/ 301
+/2025/08/ /pace-chart-shoebox-inspiration/ 301
+/2024/12/ /marathon-calculator-reviews/ 301
+/2024/10/ /provide-your-feedback/ 301
+/feed/* / 301
+/wp-content/* / 301
+/wp-admin/* / 301
