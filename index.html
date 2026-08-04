@@ -40,6 +40,9 @@
   }
   .hero h1 span{color:var(--blue)}
   .hero p{color:var(--muted); max-width:520px; margin:12px auto 0}
+  .mainnav{margin-top:16px; display:flex; justify-content:center; gap:6px 18px; flex-wrap:wrap; font-size:15.5px}
+  .mainnav a{color:var(--blue); font-weight:600; text-decoration:none; font-family:"Barlow Semi Condensed",sans-serif; letter-spacing:.3px; text-transform:uppercase; font-size:14.5px}
+  .mainnav a:hover{text-decoration:underline}
 
   .calc-frame{width:100%; border:0; display:block; height:1700px}
 
@@ -55,8 +58,26 @@
   article h3 a:hover{color:var(--blue)}
   article p{margin:0; color:var(--muted); font-size:15px}
 
-  footer{margin-top:40px; text-align:center; font-size:13.5px; color:var(--muted)}
-  footer a{color:var(--blue)}
+  .features{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin-top:40px}
+  .feature{background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:18px}
+  .feature h3{font-family:"Barlow Semi Condensed",sans-serif; font-weight:800; font-size:18px; margin:0 0 6px; letter-spacing:.3px}
+  .feature h3 span{color:var(--blue)}
+  .feature p{margin:0; font-size:15px; color:var(--muted)}
+  .feature a{color:var(--blue); font-weight:600}
+
+  .why{background:#fff; border:1.5px solid var(--line); border-left:4px solid var(--blue); border-radius:12px; padding:20px 22px; margin-top:26px}
+  .why h2{font-family:"Barlow Semi Condensed",sans-serif; text-transform:uppercase; letter-spacing:.8px; font-size:16px; margin:0 0 8px}
+  .why p{margin:0 0 10px; font-size:15.5px}
+  .why p:last-child{margin:0}
+  .why a{color:var(--blue); font-weight:600}
+
+  footer{margin-top:48px; border-top:3px solid var(--ink); padding-top:22px; font-size:14.5px; color:var(--muted)}
+  .footgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:18px; text-align:left; margin-bottom:20px}
+  .footgrid h4{font-family:"Barlow Semi Condensed",sans-serif; text-transform:uppercase; letter-spacing:.7px; font-size:13px; color:var(--ink); margin:0 0 8px}
+  .footgrid a{display:block; color:var(--blue); text-decoration:none; margin-bottom:6px; font-weight:500}
+  .footgrid a:hover{text-decoration:underline}
+  .footbase{text-align:center; border-top:1px solid var(--line); padding-top:14px; font-size:13px}
+  .footbase a{color:var(--blue)}
 </style>
 </head>
 <body>
@@ -64,22 +85,56 @@
 
   <div class="hero">
     <h1>Marathon <span>&amp; More</span> Calculator</h1>
-    <nav style="margin-top:10px;font-size:15px">
-      <a href="about.html" style="color:var(--blue);font-weight:600;text-decoration:none">How we built it</a>
-      &nbsp;·&nbsp;
-      <a href="https://github.com/YOUR-GITHUB/marathon-calculator" style="color:var(--blue);font-weight:600;text-decoration:none">Open source on GitHub</a>
+    <nav class="mainnav" aria-label="Site">
+      <a href="#calculator">Calculator</a>
+      <a href="#blog">Blog</a>
+      <a href="about.html">How we built it</a>
+      <a href="/marathoncalculator/">About us</a>
+      <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
     </nav>
     <p>Plan your pace, build a race-day strategy, and see what your training
        races predict. Free, fast, and no signup.</p>
   </div>
 
+  <a id="calculator"></a>
   <!-- The calculator is a separate file (calculator.html).
        Edit this page all you like, the tool stays untouched. -->
   <iframe id="calc" class="calc-frame" title="Marathon and More pace calculator"
           src="calculator.html"></iframe>
 
-  <!-- ====== Your existing blog / content teasers go below ====== -->
-  <section class="posts">
+  <section class="features" aria-label="What you can do here">
+    <div class="feature">
+      <h3>Plan Your <span>Splits</span></h3>
+      <p>Even splits or a custom segment strategy: settle in for 20 miles, then
+      finish fast. Every pace change is mapped mile by mile.</p>
+    </div>
+    <div class="feature">
+      <h3>Honest <span>Predictions</span></h3>
+      <p>Race equivalency that asks the real question: did you do the training,
+      or are you gutting it out? <a href="about.html">See the math</a>.</p>
+    </div>
+    <div class="feature">
+      <h3>Share &amp; <span>Download</span></h3>
+      <p>Every plan gets a link that rebuilds it exactly, plus a printable
+      download you can hand to a coach or tape to the fridge.</p>
+    </div>
+  </section>
+
+  <section class="why">
+    <h2>Built by a runner, not a media company</h2>
+    <p>This site has one purpose: help you run your race. No ads, no signup, no
+    tracking, no upsell. It's built marathon-first because 26.2 is the distance
+    that changes people, but every tool works for the half, 10K, 5K, and custom
+    distances too.</p>
+    <p>Behind it are 40+ years of running and 20+ marathon finishes, including
+    plenty of hard lessons about fast starts and skipped long runs. The whole
+    project is <a href="https://github.com/7pdaddy/marathoncalculator">open source on
+    GitHub</a>: read the math, suggest a feature, or argue with our pacing
+    philosophy. <a href="about.html">Here's how we built it</a>.</p>
+  </section>
+
+  <!-- ====== Blog ====== -->
+  <section class="posts" id="blog">
     <h2>From the blog</h2>
     <article>
       <h3><a href="/marathon-mindset-boom-and-bust/">The Marathon Mindset: Why Corporate Races Lose and Runners Win</a></h3>
@@ -104,8 +159,29 @@
   </section>
 
   <footer>
-    <a href="https://marathoncalculator.com">MarathonCalculator.com</a> ·
-    free &amp; open source · built by a runner, for runners
+    <div class="footgrid">
+      <div>
+        <h4>Tools</h4>
+        <a href="#calculator">Pace &amp; Split Calculator</a>
+        <a href="calculator.html">Full-Page Calculator</a>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <a href="about.html">How We Built It</a>
+        <a href="/marathoncalculator/">About Us</a>
+        <a href="#blog">Blog</a>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
+        <a href="https://github.com/7pdaddy/marathoncalculator/issues">Suggest a Feature</a>
+        <a href="https://github.com/7pdaddy/marathoncalculator/blob/main/LICENSE">MIT License</a>
+      </div>
+    </div>
+    <div class="footbase">
+      &copy; 2026 <a href="https://marathoncalculator.com">MarathonCalculator.com</a> ·
+      free &amp; open source · built by a runner, for runners
+    </div>
   </footer>
 </div>
 
@@ -116,9 +192,13 @@
   if (location.search) frame.src = "calculator.html" + location.search;
 
   // Auto-size the iframe: the calculator reports its height as you use it.
+  var lastH = 0;
   window.addEventListener("message", function(e){
     if (e.data && e.data.type === "mc-height" && e.data.height > 200){
-      frame.style.height = (e.data.height + 24) + "px";
+      var h = e.data.height + 24;
+      if (Math.abs(h - lastH) < 8) return; // guard against resize feedback loops
+      lastH = h;
+      frame.style.height = h + "px";
     }
   });
 </script>

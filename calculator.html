@@ -248,9 +248,14 @@
   }
   #embedPanel .share-btn{margin-top:8px}
 
+  .calcnav{margin-top:10px; display:flex; gap:16px; flex-wrap:wrap; font-size:14px}
+  .calcnav a{color:var(--blue); font-weight:600; text-decoration:none; font-family:var(--disp); letter-spacing:.4px; text-transform:uppercase}
+  .calcnav a:hover{text-decoration:underline}
+
   /* compact mode when embedded in another site */
   body.embedded header{padding:16px 0 12px}
   body.embedded .tagline{display:none}
+  body.embedded .calcnav{display:none}
 
   /* toast */
   .toast{
@@ -280,6 +285,12 @@
   <header>
     <div class="brand">Marathon <em>&amp; More</em> Calculator</div>
     <p class="tagline">Set your goal. Build your race plan. Share it with anyone.</p>
+    <nav class="calcnav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/#blog">Blog</a>
+      <a href="/about.html">How we built it</a>
+      <a href="/marathoncalculator/">About us</a>
+    </nav>
   </header>
 
   <!-- ================= RACE SETUP ================= -->
@@ -1031,10 +1042,16 @@
   if (isEmbedded || new URLSearchParams(location.search).get("embed") === "1"){
     document.body.classList.add("embedded");
   }
+  var lastPostedHeight = 0;
   function postHeight(){
     if (!isEmbedded) return;
     try {
-      parent.postMessage({ type: "mc-height", height: document.documentElement.scrollHeight }, "*");
+      // body.offsetHeight = actual content height. documentElement.scrollHeight
+      // grows with the iframe viewport, which caused an infinite grow loop.
+      var h = document.body.offsetHeight;
+      if (Math.abs(h - lastPostedHeight) < 8) return; // no real change, don't ping
+      lastPostedHeight = h;
+      parent.postMessage({ type: "mc-height", height: h }, "*");
     } catch(e){}
   }
   window.addEventListener("resize", postHeight);

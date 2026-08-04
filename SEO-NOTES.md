@@ -19,7 +19,7 @@ methodology page).
 
 ## Before you upload
 
-1. Find-and-replace `YOUR-GITHUB/marathon-calculator` with your real GitHub
+1. Find-and-replace `7pdaddy/marathoncalculator` with your real GitHub
    repo path. It appears in: index.html, about.html, and each blog page's nav,
    plus the feedback post's GitHub Issues link.
 
