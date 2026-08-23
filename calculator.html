@@ -6,16 +6,20 @@
 <title>Marathon &amp; More Calculator - Race Pace, Splits &amp; Equivalency</title>
 <meta name="description" content="Free marathon pace calculator with custom pace segments, race equivalency predictions, and shareable race plans. No ads, no signup.">
 <meta name="keywords" content="marathon pace calculator, race splits calculator, pace segments, race equivalency, Riegel calculator, marathon split strategy, running calculator">
-<link rel="canonical" href="https://marathoncalculator.com/calculator.html">
+<link rel="canonical" href="https://marathoncalculator.com/calculator">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Marathon &amp; More Calculator">
 <meta property="og:description" content="Free marathon pace calculator with custom pace segments, race equivalency predictions, and shareable race plans.">
-<meta property="og:url" content="https://marathoncalculator.com/calculator.html">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://marathoncalculator.com/calculator">
+<meta property="og:site_name" content="Marathon &amp; More Calculator">
+<meta property="og:image" content="https://marathoncalculator.com/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F4F5F1;
@@ -34,6 +38,7 @@
     --body:"Barlow", -apple-system, "Segoe UI", sans-serif;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--paper); color:var(--ink);
@@ -53,6 +58,7 @@
     height:3px; background:var(--blue);
   }
   .brand{
+    margin:0;
     font-family:var(--disp); font-weight:800; font-size:clamp(28px,6vw,40px);
     letter-spacing:.5px; text-transform:uppercase; line-height:1;
   }
@@ -257,6 +263,22 @@
   body.embedded .tagline{display:none}
   body.embedded .calcnav{display:none}
 
+  /* coach's notes */
+  .voice-toggle{display:inline-flex; border:1.5px solid var(--line); border-radius:999px; overflow:hidden}
+  .voice-toggle button{
+    font-family:var(--disp); font-weight:700; font-size:14px; letter-spacing:.3px;
+    padding:8px 14px; background:#fff; border:0; cursor:pointer; color:var(--muted);
+  }
+  .voice-toggle button[aria-pressed="true"]{background:var(--ink); color:var(--tape)}
+  .note{
+    display:flex; gap:10px; align-items:flex-start;
+    background:#FBFCFA; border:1px solid var(--line); border-left:4px solid var(--blue);
+    border-radius:0 10px 10px 0; padding:11px 14px; margin-bottom:10px; font-size:15px;
+  }
+  .note:last-child{margin-bottom:0}
+  .note .ic{font-size:18px; line-height:1.3; flex:0 0 auto}
+  .note.warn{border-left-color:#C97B1B; background:#FDF8F0}
+
   /* toast */
   .toast{
     position:fixed; left:50%; bottom:28px; transform:translate(-50%,20px);
@@ -270,8 +292,44 @@
   footer{margin-top:30px; font-size:13px; color:var(--muted); text-align:center}
   footer a{color:var(--blue)}
 
+  /* tier 1 polish: press feedback and gentle lifts, transform/opacity only */
+  .chip, .share-btn, .seg-toggle button, .unit-toggle button, .voice-toggle button,
+  .add-block, .icon-btn, .info-btn{
+    transition:transform .12s ease-out, background-color .15s ease-out, color .15s ease-out;
+  }
+  .chip:active, .share-btn:active, .seg-toggle button:active, .unit-toggle button:active,
+  .voice-toggle button:active, .add-block:active, .icon-btn:active{transform:scale(.98)}
+  @media (hover:hover){
+    .eq-card{transition:transform .18s ease-out, box-shadow .18s ease-out}
+    .eq-card:hover{transform:translateY(-3px); box-shadow:0 6px 14px rgba(18,26,34,.08)}
+  }
+  .calcnav a{position:relative}
+  .calcnav a::after{
+    content:""; position:absolute; left:0; bottom:-2px; height:2px; width:100%;
+    background:var(--blue); transform:scaleX(0); transform-origin:left;
+    transition:transform .2s ease-out;
+  }
+  .calcnav a:hover::after{transform:scaleX(1)}
+  .calcnav a:hover{text-decoration:none}
+
+  /* tier 2 signature: the runner sweeps the course when the plan changes */
+  .course{position:relative}
+  .course-runner{
+    position:absolute; top:-14px; left:0; font-size:20px; line-height:1;
+    opacity:0; pointer-events:none; will-change:transform;
+  }
+  .course-runner.go{animation:courseSweep .8s ease-out}
+  @keyframes courseSweep{
+    0%{opacity:0; transform:translateX(-6px)}
+    12%{opacity:1}
+    88%{opacity:1}
+    100%{opacity:0; transform:translateX(var(--sweep, 320px))}
+  }
+
   @media (prefers-reduced-motion: reduce){
-    *{transition:none !important}
+    html{scroll-behavior:auto}
+    *, *::before, *::after{transition:none !important; animation:none !important}
+    .course-runner{display:none}
   }
   @media (max-width:480px){
     section.card{padding:16px}
@@ -283,12 +341,12 @@
 <div class="wrap">
 
   <header>
-    <div class="brand">Marathon <em>&amp; More</em> Calculator</div>
+    <h1 class="brand">Marathon <em>&amp; More</em> Calculator</h1>
     <p class="tagline">Set your goal. Build your race plan. Share it with anyone.</p>
     <nav class="calcnav" aria-label="Site">
       <a href="/">Home</a>
       <a href="/#blog">Blog</a>
-      <a href="/about.html">How we built it</a>
+      <a href="/about">How we built it</a>
       <a href="/marathoncalculator/">About us</a>
     </nav>
   </header>
@@ -355,6 +413,7 @@
     </div>
 
     <div class="course" aria-hidden="true">
+      <span class="course-runner" id="courseRunner">🏃</span>
       <div class="course-strip" id="courseStrip"></div>
       <div class="course-labels"><span>Start</span><span id="courseMid"></span><span id="courseEnd">Finish</span></div>
     </div>
@@ -383,6 +442,18 @@
       </thead>
       <tbody></tbody>
     </table>
+  </section>
+
+  <!-- ================= COACH'S NOTES ================= -->
+  <section class="card" aria-labelledby="h-coach">
+    <div class="table-head">
+      <h2 id="h-coach" style="margin:0">Coach's notes</h2>
+      <div class="voice-toggle" role="group" aria-label="Coach voice">
+        <button id="voiceNerd" aria-pressed="true">The Pace Nerd</button>
+        <button id="voiceFun" aria-pressed="false">The Fun Runner</button>
+      </div>
+    </div>
+    <div id="coachNotes"></div>
   </section>
 
   <!-- ================= EQUIVALENCY ================= -->
@@ -472,7 +543,8 @@
     blocks: [],                // [{dist:Number|null(remainder), paceSec:Number}]
     exp: 1.06,                 // Riegel exponent 1.04..1.12 (asymmetric slider)
     eqKey: "half",             // equivalency input distance (independent of plan)
-    eqSec: null                // equivalency input time (seconds)
+    eqSec: null,               // equivalency input time (seconds)
+    voice: "nerd"              // coach voice: nerd | fun
   };
 
   /* ---------------- helpers ---------------- */
@@ -738,6 +810,103 @@
     }
   }
 
+  /* ---------------- coach's notes ---------------- */
+  function coachNotes(){
+    var f = state.voice === "fun";
+    var t = totalSec(), dist = raceDist();
+    if (!(t > 0) || !(dist > 0)) return [];
+    var avg = t / dist;
+    var paceStr = fmtPace(avg) + "/" + unitLabel();
+    var isM = state.distKey === "marathon";
+    var notes = [];
+    function add(warn, ic, nerd, fun){ notes.push({warn:warn, ic:ic, text: f ? fun : nerd}); }
+
+    // 1. the goal itself (marathon time bands)
+    if (isM){
+      if (t < 10800) add(false, "\uD83D\uDE80",
+        "Sub-3:00. That is " + paceStr + " with zero slack. At this level the plan is not a suggestion, it is the race.",
+        "SUB-THREE?! Okay, speed demon. I will be at the finish holding your snacks and losing my voice.");
+      else if (t < 12600) add(false, "\uD83C\uDFAF",
+        "A 3:00-3:30 marathon means " + paceStr + " that must feel easy at mile 8 to still exist at mile 24. Pace discipline wins this one.",
+        "Solid, serious goal. Fast enough to brag, sane enough to still like running afterward. My kind of plan.");
+      else if (t < 14400) add(false, "\uD83C\uDFAF",
+        "Sub-4:00 is the most crowded battlefield in the marathon. The runners who get it treat " + paceStr + " as a ceiling for 20 miles, not a starting bid.",
+        "The famous four-hour quest! Totally doable. The secret: run boring for 20 miles, then spend everything you saved.");
+      else if (t < 18000) add(false, "\uD83D\uDC9B",
+        "At " + paceStr + " your race is about fueling and patience more than speed. Plan your gels like you plan your splits.",
+        "This is the smart zone: enjoy the crowd, high-five some kids, and let everyone who sprinted the start come back to you.");
+      else add(false, "\uD83D\uDC9B",
+        "Long day, honest goal. Time on feet in training matters more than pace now. Practice eating and walking breaks on purpose.",
+        "Finishing a marathon at any speed beats everyone on the couch. Pack snacks, take pictures, collect the medal.");
+    } else {
+      add(false, "\uD83C\uDFAF",
+        "Goal locked: " + fmtTime(t) + " at " + paceStr + ". The split table below is the contract, race day is the signature.",
+        "Goal: " + fmtTime(t) + ". Love it. Write " + paceStr + " on your hand and go make friends out there.");
+    }
+
+    // 2. honesty check vs equivalency input
+    if (state.eqSec > 0 && DIST_KM[state.eqKey] && state.eqKey !== state.distKey && raceKm() > 0){
+      var pred = state.eqSec * Math.pow(raceKm() / DIST_KM[state.eqKey], state.exp);
+      var gap = (pred - t) / pred;
+      if (gap > 0.03) add(true, "\uD83E\uDD14",
+        "Your " + DIST_LABEL[state.eqKey] + " time predicts " + fmtTime(pred) + " here, but the goal says " + fmtTime(t) + ". Either training closes that gap before race day or the goal should.",
+        "Your " + DIST_LABEL[state.eqKey] + " says " + fmtTime(pred) + ", your goal says " + fmtTime(t) + ". Somebody is bluffing! Dream big, but maybe pack a plan-B pace.");
+      else if (gap < -0.05) add(false, "\uD83D\uDCC8",
+        "Your " + DIST_LABEL[state.eqKey] + " time predicts " + fmtTime(pred) + " here. Your goal is softer than your fitness. Sandbagging is allowed, just do it on purpose.",
+        "Psst, your " + DIST_LABEL[state.eqKey] + " says you are faster than this goal. Secret weapon energy. Cruise, then unleash.");
+    }
+
+    // 3. segment strategy analysis
+    if (state.mode === "custom"){
+      var rb = resolvedBlocks().filter(function(b){ return b.dist > 0; });
+      if (rb.length >= 2){
+        var first = rb[0], last = rb[rb.length - 1];
+        if (first.paceSec < last.paceSec - 5) add(true, "\u26A0\uFE0F",
+          "Your opening segment is faster than your closing one. Banking time is a loan the last miles collect with interest. Consider flipping it.",
+          "Starting hot, huh? Mile 20 would like a word. Start chill and finish like a hero instead, the photos are way better.");
+        else if (last.paceSec < first.paceSec - 5) add(false, "\uD83C\uDFC1",
+          "Negative split plan. Statistically how the best races are run. The hard part is not the fast finish, it is staying honest early.",
+          "Finish-fast plan! Passing people in the last miles is the greatest legal high in running. Just behave yourself at the start.");
+        else add(false, "\uD83D\uDCD0",
+          "Segments set, paces steady. Clean plan. Rehearse the transitions in training so they are boring on race day.",
+          "Nice tidy segments! Now your brain only has to survive one chunk at a time. Race hack unlocked.");
+      }
+    } else {
+      add(false, "\uD83D\uDCD0",
+        "Even splits: statistically the fastest way to cover the distance. Boring is fast.",
+        "Same pace the whole way, like cruise control, except your legs are the engine and the complaint department.");
+    }
+
+    // 4. runner profile slider
+    if (state.exp >= 1.09) add(true, "\uD83C\uDFCB\uFE0F",
+      "Profile says the long runs did not happen. The math believes you. Start a notch conservative and treat the final stretch as its own race.",
+      "Skipped some long runs? No shame, that is my whole personality. Start easy and treat mile 20 like the boss fight it is.");
+    else if (state.exp <= 1.045) add(false, "\uD83D\uDEE1\uFE0F",
+      "Endurance monster settings. Your risk is not fading, it is leaving time on the table by starting too cautious.",
+      "You are the tortoise with a finishing kick. Everyone who blasted the start becomes your snack after halfway.");
+
+    // 5. marathon filler wisdom
+    if (isM && notes.length < 4) add(false, "\uD83E\uDDE0",
+      "Old rule, still true: the marathon is a 20-mile warmup and a 10K race. Plan the first 20 so the 10K is possible.",
+      "They say the race starts at mile 20. Before that, you are just jogging to the start line with 20,000 friends.");
+
+    return notes.slice(0, 4);
+  }
+  function renderCoach(){
+    $("voiceNerd").setAttribute("aria-pressed", state.voice === "nerd" ? "true" : "false");
+    $("voiceFun").setAttribute("aria-pressed", state.voice === "fun" ? "true" : "false");
+    var box = $("coachNotes");
+    box.innerHTML = "";
+    coachNotes().forEach(function(n){
+      var div = document.createElement("div");
+      div.className = "note" + (n.warn ? " warn" : "");
+      var ic = document.createElement("span"); ic.className = "ic"; ic.textContent = n.ic;
+      var tx = document.createElement("span"); tx.textContent = n.text;
+      div.appendChild(ic); div.appendChild(tx);
+      box.appendChild(div);
+    });
+  }
+
   // slider 0..100 <-> Riegel exponent. Asymmetric on purpose: runners who
   // fade (few long runs, low mileage) need much more headroom than 1.08,
   // so the left half spans 1.12..1.06 and the right half 1.06..1.04.
@@ -802,6 +971,7 @@
     }
     if (state.eqSec) { q.push("eq=" + state.eqKey); q.push("eqt=" + fmtTime(state.eqSec)); }
     q.push("profile=" + state.exp.toFixed(3));
+    if (state.voice !== "nerd") q.push("voice=" + state.voice);
     return q.join("&");
   }
   function syncURL(){
@@ -823,6 +993,8 @@
     if (eq && DIST_KM[eq]) state.eqKey = eq;
     var eqt = parseTime(p.get("eqt"));
     if (eqt) state.eqSec = eqt;
+    var vc = p.get("voice");
+    if (vc === "fun" || vc === "nerd") state.voice = vc;
 
     var mode = p.get("mode");
     if (mode === "custom"){
@@ -863,6 +1035,21 @@
     } catch(e){}
   }
 
+  /* ---------------- signature: course sweep ---------------- */
+  var sweepTimer = null;
+  function sweepCourse(){
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    clearTimeout(sweepTimer);
+    sweepTimer = setTimeout(function(){
+      var r = $("courseRunner"), strip = $("courseStrip");
+      if (!r || !strip || !strip.offsetWidth) return;
+      r.style.setProperty("--sweep", (strip.offsetWidth - 14) + "px");
+      r.classList.remove("go");
+      void r.offsetWidth; // restart the animation
+      r.classList.add("go");
+    }, 450);
+  }
+
   /* ---------------- master update ---------------- */
   // rebuildBlocks=false keeps focus in block inputs while typing
   function update(rebuildBlocks){
@@ -873,9 +1060,11 @@
     renderFinish();
     renderSplits();
     renderEquivalency();
+    renderCoach();
     syncURL();
     save();
     postHeight();
+    sweepCourse();
   }
 
   /* ---------------- events ---------------- */
@@ -923,7 +1112,7 @@
     if (t !== null && state.mode === "even"){
       state.goalSec = t;
       if (document.activeElement !== goalPaceEl) goalPaceEl.value = fmtPace(t / raceDist());
-      renderCourse(); renderFinish(); renderSplits(); renderEquivalency(); syncURL(); save();
+      renderCourse(); renderFinish(); renderSplits(); renderEquivalency(); renderCoach(); syncURL(); save();
     }
   });
   goalTimeEl.addEventListener("blur", function(){ update(); });
@@ -934,7 +1123,7 @@
     if (pSec !== null && state.mode === "even"){
       state.goalSec = Math.round(pSec * raceDist());
       if (document.activeElement !== goalTimeEl) goalTimeEl.value = fmtTime(state.goalSec);
-      renderCourse(); renderFinish(); renderSplits(); renderEquivalency(); syncURL(); save();
+      renderCourse(); renderFinish(); renderSplits(); renderEquivalency(); renderCoach(); syncURL(); save();
     }
   });
   goalPaceEl.addEventListener("blur", function(){ update(); });
@@ -964,19 +1153,19 @@
 
   $("profileSlider").addEventListener("input", function(){
     state.exp = expFromSlider(this.value);
-    renderEquivalency(); syncURL(); save();
+    renderEquivalency(); renderCoach(); syncURL(); save();
   });
 
   document.querySelectorAll("#eqChips .chip").forEach(function(c){
     c.addEventListener("click", function(){
       state.eqKey = c.dataset.d;
-      renderEquivalency(); syncURL(); save();
+      renderEquivalency(); renderCoach(); syncURL(); save();
     });
   });
   eqTimeEl.addEventListener("input", function(){
     var t = parseTime(eqTimeEl.value);
     eqTimeEl.classList.toggle("invalid", t === null);
-    if (t !== null){ state.eqSec = t; renderEquivalency(); syncURL(); save(); }
+    if (t !== null){ state.eqSec = t; renderEquivalency(); renderCoach(); syncURL(); save(); }
   });
   eqTimeEl.addEventListener("blur", function(){ renderEquivalency(); });
   $("eqUseGoal").addEventListener("click", function(e){
@@ -984,8 +1173,15 @@
     if (DIST_KM[state.distKey]){
       state.eqKey = state.distKey;
       state.eqSec = Math.round(totalSec());
-      renderEquivalency(); syncURL(); save();
+      renderEquivalency(); renderCoach(); syncURL(); save();
     }
+  });
+
+  $("voiceNerd").addEventListener("click", function(){
+    if (state.voice !== "nerd"){ state.voice = "nerd"; renderCoach(); syncURL(); save(); }
+  });
+  $("voiceFun").addEventListener("click", function(){
+    if (state.voice !== "fun"){ state.voice = "fun"; renderCoach(); syncURL(); save(); }
   });
 
   $("infoBtn").addEventListener("click", function(){
@@ -1006,7 +1202,7 @@
   function calcURL(){
     return (location.origin && location.origin !== "null")
       ? location.origin + location.pathname
-      : "https://marathoncalculator.com/calculator.html";
+      : "https://marathoncalculator.com/calculator";
   }
   $("embedLink").addEventListener("click", function(e){
     e.preventDefault();
@@ -1113,6 +1309,14 @@
                rows + '</tbody></table>';
     }
 
+    var coachHTML = "";
+    var liveNotes = document.querySelectorAll("#coachNotes .note");
+    if (liveNotes.length){
+      var items = "";
+      liveNotes.forEach(function(nEl){ items += "<li>" + esc(nEl.textContent) + "</li>"; });
+      coachHTML = "<h2>Coach's notes</h2><ul style=\"padding-left:20px\">" + items + "</ul>";
+    }
+
     var today = new Date().toLocaleDateString();
     var strategy = state.mode === "custom" ? "Segment strategy" : "Even splits";
 
@@ -1135,7 +1339,7 @@
       '<div class="summary"><div><div class="lab">Distance</div><div class="val">' + esc(distName) + '</div></div>' +
       '<div><div class="lab">Finish</div><div class="val">' + finish + '</div></div>' +
       '<div><div class="lab">Avg pace</div><div class="val">' + avg + '</div></div></div>' +
-      segHTML +
+      segHTML + coachHTML +
       '<h2>Splits</h2><table><thead><tr><th>' + unitLabelLong() + '</th><th>Split pace</th><th>Elapsed</th></tr></thead><tbody>' + splitRows + '</tbody></table>' +
       eqHTML +
       '<div class="foot"><p class="noprint"><a href="' + esc(planShareURL()) + '">Open this plan in the calculator</a></p>' +
@@ -1154,7 +1358,7 @@
     document.body.appendChild(a); a.click();
     setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 100);
     var t = $("toast");
-    t.textContent = "Plan downloaded!";
+    t.textContent = "Plan downloaded! Tape it to the fridge.";
     t.classList.add("show");
     setTimeout(function(){ t.classList.remove("show"); t.textContent = "Link copied to clipboard!"; }, 2200);
   });

@@ -3,23 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026 Goals: Why the Marathon Is a Symbol for Achieving More - Marathon &amp; More Calculator</title>
+<title>2026 Goals: The Marathon as a Symbol - MarathonCalculator</title>
 <meta name="description" content="Marathon goals are just one part of my 2026 goals. Learn why running a marathon is symbolic for achieving bigger personal and life goals.">
 <meta name="keywords" content="2026 running goals, marathon goals, goal setting, new year running resolutions, marathon motivation">
 <link rel="canonical" href="https://marathoncalculator.com/2026-goals/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2026 Goals: Why the Marathon Is a Symbol for Achieving More">
+<meta property="og:title" content="2026 Goals: The Marathon as a Symbol">
 <meta property="og:description" content="Marathon goals are just one part of my 2026 goals. Learn why running a marathon is symbolic for achieving bigger personal and life goals.">
 <meta property="og:url" content="https://marathoncalculator.com/2026-goals/">
 <meta property="og:site_name" content="Marathon &amp; More Calculator">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://marathoncalculator.com/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","headline":"2026 Goals: Why the Marathon Is a Symbol for Achieving More","description":"Marathon goals are just one part of my 2026 goals. Learn why running a marathon is symbolic for achieving bigger personal and life goals.","datePublished":"2025-12-30","author":{"@type":"Organization","name":"MarathonCalculator.com"},"publisher":{"@type":"Organization","name":"MarathonCalculator.com"},"mainEntityOfPage":"https://marathoncalculator.com/2026-goals/"}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F4F5F1; --card:#FFFFFF; --ink:#121A22; --muted:#5C6672;
@@ -38,7 +41,13 @@
   .brand em{font-style:normal; color:var(--blue)}
   nav{margin-top:8px; font-size:15px}
   nav a{color:var(--blue); font-weight:600; text-decoration:none; margin-right:14px}
-  nav a:hover{text-decoration:underline}
+  nav a{position:relative}
+  nav a::after{content:""; position:absolute; left:0; bottom:-2px; height:2px; width:100%;
+    background:var(--blue); transform:scaleX(0); transform-origin:left; transition:transform .2s ease-out}
+  nav a:hover::after{transform:scaleX(1)}
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{transition:none !important; animation:none !important}
+  }
   h1{font-family:var(--disp); font-weight:800; font-size:clamp(26px,6vw,36px); line-height:1.12; margin:32px 0 6px}
   .postmeta{color:var(--muted); font-size:14.5px; margin-bottom:22px}
   article h1, article h2, article h3{font-family:var(--disp); font-weight:700; line-height:1.2}
@@ -66,7 +75,7 @@
     <div class="brand"><a href="/">Marathon <em>&amp; More</em> Calculator</a></div>
     <nav>
       <a href="/">Calculator</a>
-      <a href="/about.html">How we built it</a>
+      <a href="/about">How we built it</a>
       <a href="/marathoncalculator/">About us</a>
       <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
     </nav>
@@ -101,6 +110,8 @@
     <a href="/">Marathon &amp; More Calculator</a>: build your splits, plan
     segments, and see what your recent races predict.</div>
 
+  
+  <div class="cta-box" style="margin-top:16px"><b>Keep reading:</b> <a href="/pace-chart-shoebox-inspiration/">Old-School Motivation, Right on the Box</a> · <a href="/marathon-mindset-boom-and-bust/">The Marathon Mindset: Why Corporate Races Lose and Runners Win</a></div>
   <a class="backlink" href="/">&larr; Back to the calculator</a>
 
   <footer>

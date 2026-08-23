@@ -13,7 +13,13 @@
 <meta property="og:description" content="Free marathon pace calculator: plan your splits, build a segment-based race strategy, and predict equivalent race times. No ads, no signup.">
 <meta property="og:url" content="https://marathoncalculator.com/">
 <meta property="og:site_name" content="Marathon &amp; More Calculator">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://marathoncalculator.com/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Marathon & More Calculator","url":"https://marathoncalculator.com/","description":"Free marathon pace calculator with split planning, segment race strategy, and Riegel-based race equivalency predictions.","applicationCategory":"SportsApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"MarathonCalculator.com"}}
 </script>
@@ -27,6 +33,7 @@
     --line:#E2E5DD; --blue:#2447C7; --tape:#FFD23F;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{
     margin:0; background:var(--paper); color:var(--ink);
     font-family:"Barlow", -apple-system, "Segoe UI", sans-serif; line-height:1.55;
@@ -40,6 +47,14 @@
   }
   .hero h1 span{color:var(--blue)}
   .hero p{color:var(--muted); max-width:520px; margin:12px auto 0}
+  .spark{
+    font-family:"Barlow Semi Condensed",sans-serif; font-weight:700; font-size:17px;
+    letter-spacing:.3px; color:var(--blue); margin:14px auto 0; max-width:480px;
+    cursor:pointer; user-select:none;
+  }
+  .spark::before{content:"\201C"; color:var(--tape); font-size:22px; margin-right:2px}
+  .spark::after{content:"\201D"; color:var(--tape); font-size:22px; margin-left:2px}
+
   .mainnav{margin-top:16px; display:flex; justify-content:center; gap:6px 18px; flex-wrap:wrap; font-size:15.5px}
   .mainnav a{color:var(--blue); font-weight:600; text-decoration:none; font-family:"Barlow Semi Condensed",sans-serif; letter-spacing:.3px; text-transform:uppercase; font-size:14.5px}
   .mainnav a:hover{text-decoration:underline}
@@ -71,6 +86,28 @@
   .why p:last-child{margin:0}
   .why a{color:var(--blue); font-weight:600}
 
+  /* tier 1 polish: micro-interactions, transform/opacity only, under 250ms */
+  @media (hover:hover){
+    .feature, .posts article{transition:transform .18s ease-out, box-shadow .18s ease-out}
+    .feature:hover{transform:translateY(-3px); box-shadow:0 6px 16px rgba(18,26,34,.08)}
+    .posts article:hover{transform:translateY(-2px)}
+  }
+  .mainnav a, .footgrid a{position:relative}
+  .mainnav a::after, .footgrid a::after{
+    content:""; position:absolute; left:0; bottom:-2px; height:2px; width:100%;
+    background:var(--blue); transform:scaleX(0); transform-origin:left;
+    transition:transform .2s ease-out;
+  }
+  .mainnav a:hover::after, .footgrid a:hover::after{transform:scaleX(1)}
+  .mainnav a:hover, .footgrid a:hover{text-decoration:none}
+  .pre{opacity:0; transform:translateY(10px)}
+  .pre.vis{opacity:1; transform:none; transition:opacity .25s ease-out, transform .25s ease-out}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *, *::before, *::after{transition:none !important; animation:none !important}
+    .pre{opacity:1; transform:none}
+  }
+
   footer{margin-top:48px; border-top:3px solid var(--ink); padding-top:22px; font-size:14.5px; color:var(--muted)}
   .footgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:18px; text-align:left; margin-bottom:20px}
   .footgrid h4{font-family:"Barlow Semi Condensed",sans-serif; text-transform:uppercase; letter-spacing:.7px; font-size:13px; color:var(--ink); margin:0 0 8px}
@@ -88,19 +125,20 @@
     <nav class="mainnav" aria-label="Site">
       <a href="#calculator">Calculator</a>
       <a href="#blog">Blog</a>
-      <a href="about.html">How we built it</a>
+      <a href="/about">How we built it</a>
       <a href="/marathoncalculator/">About us</a>
       <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
     </nav>
     <p>Plan your pace, build a race-day strategy, and see what your training
        races predict. Free, fast, and no signup.</p>
+    <p class="spark" id="spark" title="Tap for another">The last 10K is where you meet yourself.</p>
   </div>
 
   <a id="calculator"></a>
   <!-- The calculator is a separate file (calculator.html).
        Edit this page all you like, the tool stays untouched. -->
   <iframe id="calc" class="calc-frame" title="Marathon and More pace calculator"
-          src="calculator.html"></iframe>
+          src="/calculator"></iframe>
 
   <section class="features" aria-label="What you can do here">
     <div class="feature">
@@ -111,7 +149,7 @@
     <div class="feature">
       <h3>Honest <span>Predictions</span></h3>
       <p>Race equivalency that asks the real question: did you do the training,
-      or are you gutting it out? <a href="about.html">See the math</a>.</p>
+      or are you gutting it out? <a href="/about">See the math</a>.</p>
     </div>
     <div class="feature">
       <h3>Share &amp; <span>Download</span></h3>
@@ -130,7 +168,7 @@
     plenty of hard lessons about fast starts and skipped long runs. The whole
     project is <a href="https://github.com/7pdaddy/marathoncalculator">open source on
     GitHub</a>: read the math, suggest a feature, or argue with our pacing
-    philosophy. <a href="about.html">Here's how we built it</a>.</p>
+    philosophy. <a href="/about">Here's how we built it</a>.</p>
   </section>
 
   <!-- ====== Blog ====== -->
@@ -163,11 +201,11 @@
       <div>
         <h4>Tools</h4>
         <a href="#calculator">Pace &amp; Split Calculator</a>
-        <a href="calculator.html">Full-Page Calculator</a>
+        <a href="/calculator">Full-Page Calculator</a>
       </div>
       <div>
         <h4>Learn</h4>
-        <a href="about.html">How We Built It</a>
+        <a href="/about">How We Built It</a>
         <a href="/marathoncalculator/">About Us</a>
         <a href="#blog">Blog</a>
       </div>
@@ -179,6 +217,7 @@
       </div>
     </div>
     <div class="footbase">
+      Static files. No tracking. Loads fast.<br>
       &copy; 2026 <a href="https://marathoncalculator.com">MarathonCalculator.com</a> ·
       free &amp; open source · built by a runner, for runners
     </div>
@@ -189,7 +228,40 @@
   // Pass shared-link params through to the calculator, so links like
   // marathoncalculator.com/?mode=custom&b1_dist=20... still work.
   var frame = document.getElementById("calc");
-  if (location.search) frame.src = "calculator.html" + location.search;
+  if (location.search) frame.src = "/calculator" + location.search;
+
+  // Spark lines: a different one each visit, tap for another.
+  var sparks = [
+    "The last 10K is where you meet yourself.",
+    "Every PR started as a number that felt impossible.",
+    "Plan like a nerd. Race like a hero.",
+    "Banking time is a loan mile 22 collects with interest.",
+    "Somewhere past mile 20, the excuses run out.",
+    "Boring pacing builds brave finishes.",
+    "You do not rise to race day. You fall to your plan.",
+    "The couch never asks for a medal."
+  ];
+  var sparkEl = document.getElementById("spark");
+  var sparkIdx = Math.floor(Math.random() * sparks.length);
+  sparkEl.textContent = sparks[sparkIdx];
+  sparkEl.addEventListener("click", function(){
+    sparkIdx = (sparkIdx + 1) % sparks.length;
+    sparkEl.textContent = sparks[sparkIdx];
+  });
+
+  // Fade-in on first scroll into view. Pure enhancement: without JS (or with
+  // reduced motion) everything is simply visible.
+  if ("IntersectionObserver" in window &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var fadeEls = document.querySelectorAll(".feature, .why, .posts article");
+    fadeEls.forEach(function(el){ el.classList.add("pre"); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(function(el){ io.observe(el); });
+  }
 
   // Auto-size the iframe: the calculator reports its height as you use it.
   var lastH = 0;
