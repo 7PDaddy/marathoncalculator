@@ -19,10 +19,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://marathoncalculator.com/privacy</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://marathoncalculator.com/marathoncalculator/</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marathoncalculator.com/sub-4-hour-marathon-pace/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://marathoncalculator.com/marathon-mindset-boom-and-bust/</loc>

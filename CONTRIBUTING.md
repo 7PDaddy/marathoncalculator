@@ -21,7 +21,9 @@ step. If you can open a file in a text editor, you can contribute.
    file that works offline.
 2. **Mobile first.** Everything must work on a phone without horizontal
    scrolling.
-3. **No tracking, no ads, no signup.** That's the whole point of the site.
+3. **No ads, no signup, no invasive tracking.** Anonymous, cookieless visit
+   counting is the only measurement allowed. Nothing that profiles users,
+   sets cookies, or sends their data anywhere.
 4. **Test the basics** before submitting: even splits, segments, the
    equivalency slider, share links, and the download button.
 

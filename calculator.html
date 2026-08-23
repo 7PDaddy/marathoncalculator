@@ -270,6 +270,9 @@
     padding:8px 14px; background:#fff; border:0; cursor:pointer; color:var(--muted);
   }
   .voice-toggle button[aria-pressed="true"]{background:var(--ink); color:var(--tape)}
+  .coach-why{
+    font-size:13.5px; color:var(--muted); margin:0 0 12px; font-style:italic;
+  }
   .note{
     display:flex; gap:10px; align-items:flex-start;
     background:#FBFCFA; border:1px solid var(--line); border-left:4px solid var(--blue);
@@ -449,10 +452,12 @@
     <div class="table-head">
       <h2 id="h-coach" style="margin:0">Coach's notes</h2>
       <div class="voice-toggle" role="group" aria-label="Coach voice">
-        <button id="voiceNerd" aria-pressed="true">The Pace Nerd</button>
-        <button id="voiceFun" aria-pressed="false">The Fun Runner</button>
+        <button id="voiceNerd" aria-pressed="true">Sergeant Stride</button>
+        <button id="voiceFun" aria-pressed="false">The Pace Cadet</button>
       </div>
     </div>
+    <p class="coach-why">Two coaches, because there is no one right way to run.
+    Pick the voice that gets you out the door.</p>
     <div id="coachNotes"></div>
   </section>
 
@@ -511,12 +516,17 @@
   <footer>
     Free &amp; open source · no ads, no signup ·
     <a href="#" id="embedLink">Embed this calculator</a> ·
+    <a href="/privacy">Privacy</a> ·
     <a href="https://marathoncalculator.com" target="_blank" rel="noopener">MarathonCalculator.com</a>
     <div id="embedPanel" hidden>
       <p style="margin:0 0 8px"><b>Add this calculator to your site.</b>
       Paste the code below, and please keep the credit link so others can find the tool.</p>
       <textarea id="embedCode" readonly aria-label="Embed code"></textarea>
       <button class="share-btn" id="copyEmbed">Copy embed code</button>
+      <p style="margin:14px 0 8px"><b>Or the compact widget</b> (340px, fits any
+      sidebar): a quick pace checker with a link back to the full planner.</p>
+      <textarea id="widgetCode" readonly aria-label="Widget embed code" style="height:80px"></textarea>
+      <button class="share-btn" id="copyWidget">Copy widget code</button>
     </div>
   </footer>
 </div>
@@ -544,7 +554,7 @@
     exp: 1.06,                 // Riegel exponent 1.04..1.12 (asymmetric slider)
     eqKey: "half",             // equivalency input distance (independent of plan)
     eqSec: null,               // equivalency input time (seconds)
-    voice: "nerd"              // coach voice: nerd | fun
+    voice: "nerd"              // nerd = Sergeant Stride, fun = The Pace Cadet
   };
 
   /* ---------------- helpers ---------------- */
@@ -824,23 +834,23 @@
     // 1. the goal itself (marathon time bands)
     if (isM){
       if (t < 10800) add(false, "\uD83D\uDE80",
-        "Sub-3:00. That is " + paceStr + " with zero slack. At this level the plan is not a suggestion, it is the race.",
-        "SUB-THREE?! Okay, speed demon. I will be at the finish holding your snacks and losing my voice.");
+        "Sub-3:00. " + paceStr + " with zero slack. At this level, my advice is simple: treat the plan as the race itself.",
+        "SUB-THREE?! Okay, speed demon. Cadet reporting for duty at the finish line, holding your snacks and losing my voice.");
       else if (t < 12600) add(false, "\uD83C\uDFAF",
-        "A 3:00-3:30 marathon means " + paceStr + " that must feel easy at mile 8 to still exist at mile 24. Pace discipline wins this one.",
+        "3:00 to 3:30 means " + paceStr + " that should feel easy at mile 8 to still exist at mile 24. In my experience, pace discipline wins this one.",
         "Solid, serious goal. Fast enough to brag, sane enough to still like running afterward. My kind of plan.");
       else if (t < 14400) add(false, "\uD83C\uDFAF",
-        "Sub-4:00 is the most crowded battlefield in the marathon. The runners who get it treat " + paceStr + " as a ceiling for 20 miles, not a starting bid.",
+        "Sub-4:00, the most crowded battlefield in the marathon. The runners I see succeed treat " + paceStr + " as a ceiling for 20 miles, not an opening bid.",
         "The famous four-hour quest! Totally doable. The secret: run boring for 20 miles, then spend everything you saved.");
       else if (t < 18000) add(false, "\uD83D\uDC9B",
-        "At " + paceStr + " your race is about fueling and patience more than speed. Plan your gels like you plan your splits.",
+        "At " + paceStr + " this race is won on fueling and patience more than speed. My orders: plan your gels like you plan your splits.",
         "This is the smart zone: enjoy the crowd, high-five some kids, and let everyone who sprinted the start come back to you.");
       else add(false, "\uD83D\uDC9B",
-        "Long day, honest goal. Time on feet in training matters more than pace now. Practice eating and walking breaks on purpose.",
+        "Long day, honest goal. Time on feet matters more than pace here. Practice eating and walking breaks on purpose. No shame in a plan that works.",
         "Finishing a marathon at any speed beats everyone on the couch. Pack snacks, take pictures, collect the medal.");
     } else {
       add(false, "\uD83C\uDFAF",
-        "Goal locked: " + fmtTime(t) + " at " + paceStr + ". The split table below is the contract, race day is the signature.",
+        "Goal locked: " + fmtTime(t) + " at " + paceStr + ". The split table below is the contract. Race day is the signature.",
         "Goal: " + fmtTime(t) + ". Love it. Write " + paceStr + " on your hand and go make friends out there.");
     }
 
@@ -849,10 +859,10 @@
       var pred = state.eqSec * Math.pow(raceKm() / DIST_KM[state.eqKey], state.exp);
       var gap = (pred - t) / pred;
       if (gap > 0.03) add(true, "\uD83E\uDD14",
-        "Your " + DIST_LABEL[state.eqKey] + " time predicts " + fmtTime(pred) + " here, but the goal says " + fmtTime(t) + ". Either training closes that gap before race day or the goal should.",
+        "Your " + DIST_LABEL[state.eqKey] + " predicts " + fmtTime(pred) + " here, but the goal says " + fmtTime(t) + ". Something has to close that gap: training, or the goal. Your call, but I would decide now, not at mile 22.",
         "Your " + DIST_LABEL[state.eqKey] + " says " + fmtTime(pred) + ", your goal says " + fmtTime(t) + ". Somebody is bluffing! Dream big, but maybe pack a plan-B pace.");
       else if (gap < -0.05) add(false, "\uD83D\uDCC8",
-        "Your " + DIST_LABEL[state.eqKey] + " time predicts " + fmtTime(pred) + " here. Your goal is softer than your fitness. Sandbagging is allowed, just do it on purpose.",
+        "Your " + DIST_LABEL[state.eqKey] + " predicts " + fmtTime(pred) + " here. This goal is softer than your fitness. Sandbagging is allowed, soldier, just do it on purpose.",
         "Psst, your " + DIST_LABEL[state.eqKey] + " says you are faster than this goal. Secret weapon energy. Cruise, then unleash.");
     }
 
@@ -862,25 +872,25 @@
       if (rb.length >= 2){
         var first = rb[0], last = rb[rb.length - 1];
         if (first.paceSec < last.paceSec - 5) add(true, "\u26A0\uFE0F",
-          "Your opening segment is faster than your closing one. Banking time is a loan the last miles collect with interest. Consider flipping it.",
+          "Opening segment faster than the closing one. Banking time is a loan the last miles collect with interest. I would flip it, though plenty of runners have gutted it out this way.",
           "Starting hot, huh? Mile 20 would like a word. Start chill and finish like a hero instead, the photos are way better.");
         else if (last.paceSec < first.paceSec - 5) add(false, "\uD83C\uDFC1",
-          "Negative split plan. Statistically how the best races are run. The hard part is not the fast finish, it is staying honest early.",
+          "Negative split. Statistically how the best races get run. The hard part is not the fast finish, it is staying honest early.",
           "Finish-fast plan! Passing people in the last miles is the greatest legal high in running. Just behave yourself at the start.");
         else add(false, "\uD83D\uDCD0",
-          "Segments set, paces steady. Clean plan. Rehearse the transitions in training so they are boring on race day.",
+          "Segments set, paces steady. Clean plan. Rehearse the transitions in training so race day is boring.",
           "Nice tidy segments! Now your brain only has to survive one chunk at a time. Race hack unlocked.");
       }
     } else {
       add(false, "\uD83D\uDCD0",
-        "Even splits: statistically the fastest way to cover the distance. Boring is fast.",
+        "Even splits: statistically the most efficient way to cover the distance. Boring is fast.",
         "Same pace the whole way, like cruise control, except your legs are the engine and the complaint department.");
     }
 
     // 4. runner profile slider
     if (state.exp >= 1.09) add(true, "\uD83C\uDFCB\uFE0F",
-      "Profile says the long runs did not happen. The math believes you. Start a notch conservative and treat the final stretch as its own race.",
-      "Skipped some long runs? No shame, that is my whole personality. Start easy and treat mile 20 like the boss fight it is.");
+      "Profile says the long runs did not happen. The math believes you, and so do I. Start a notch conservative and treat the final stretch as its own race.",
+      "Skipped some long runs? No shame, that is my entire personality. Start easy and treat mile 20 like the boss fight it is.");
     else if (state.exp <= 1.045) add(false, "\uD83D\uDEE1\uFE0F",
       "Endurance monster settings. Your risk is not fading, it is leaving time on the table by starting too cautious.",
       "You are the tortoise with a finishing kick. Everyone who blasted the start becomes your snack after halfway.");
@@ -888,7 +898,7 @@
     // 5. marathon filler wisdom
     if (isM && notes.length < 4) add(false, "\uD83E\uDDE0",
       "Old rule, still true: the marathon is a 20-mile warmup and a 10K race. Plan the first 20 so the 10K is possible.",
-      "They say the race starts at mile 20. Before that, you are just jogging to the start line with 20,000 friends.");
+      "They say the race starts at mile 20. Before that, you are just jogging to the real start line with 20,000 friends.");
 
     return notes.slice(0, 4);
   }
@@ -1215,9 +1225,24 @@
         '<p style="font-size:14px;text-align:center;">\n' +
         '  <a href="https://marathoncalculator.com">Marathon pace &amp; race strategy calculator</a>\n' +
         '  by MarathonCalculator.com - free &amp; open source</p>';
+      $("widgetCode").value =
+        '<iframe src="https://marathoncalculator.com/widget" style="width:100%;max-width:360px;border:0;" height="330"\n' +
+        '  title="Race pace widget by MarathonCalculator.com" loading="lazy"></iframe>';
     }
     postHeight();
   });
+  $("copyWidget").addEventListener("click", function(){
+    var ta = $("widgetCode");
+    ta.select();
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value);
+    } else { try { document.execCommand("copy"); } catch(e){} }
+    var t = $("toast");
+    t.textContent = "Widget code copied!";
+    t.classList.add("show");
+    setTimeout(function(){ t.classList.remove("show"); t.textContent = "Link copied to clipboard!"; }, 2200);
+  });
+
   $("copyEmbed").addEventListener("click", function(){
     var ta = $("embedCode");
     ta.select();
@@ -1242,16 +1267,28 @@
   function postHeight(){
     if (!isEmbedded) return;
     try {
-      // body.offsetHeight = actual content height. documentElement.scrollHeight
-      // grows with the iframe viewport, which caused an infinite grow loop.
-      var h = document.body.offsetHeight;
+      // Measure the content wrapper itself: its bottom edge is the true end of
+      // the page regardless of how tall the iframe viewport currently is.
+      var wrap = document.querySelector(".wrap");
+      var h = Math.ceil(wrap.getBoundingClientRect().bottom + (window.scrollY || 0)) + 2;
       if (Math.abs(h - lastPostedHeight) < 8) return; // no real change, don't ping
       lastPostedHeight = h;
       parent.postMessage({ type: "mc-height", height: h }, "*");
     } catch(e){}
   }
   window.addEventListener("resize", postHeight);
-  window.addEventListener("load", postHeight);
+  window.addEventListener("load", function(){
+    postHeight();
+    // fonts and images can settle late; re-check a few times
+    setTimeout(postHeight, 300);
+    setTimeout(postHeight, 1200);
+  });
+  if (typeof ResizeObserver !== "undefined"){
+    try {
+      new ResizeObserver(function(){ postHeight(); })
+        .observe(document.querySelector(".wrap"));
+    } catch(e){}
+  }
 
   /* ---------------- download plan ---------------- */
   function planShareURL(){

@@ -6,8 +6,9 @@ that account for whether you actually did the training.
 
 **Live site:** https://marathoncalculator.com
 
-Plain HTML/CSS/JS in a single file. No frameworks, no build step, no server, no
-tracking, no ads, no signup.
+Plain HTML/CSS/JS in a single file. No frameworks, no build step, no server,
+no ads, no cookies, no signup. The only measurement is anonymous, cookieless
+visit counting, described on the site's privacy page.
 
 ## Files
 
@@ -31,10 +32,15 @@ tracking, no ads, no signup.
   deliberately wider on the "fades over distance" side than the textbook 1.06,
   because undertrained marathoners fade far more than classic Riegel predicts.
   See `about.html` for the reasoning.
+- **Coach's notes.** Two voices react to the plan you build: **Sergeant Stride**
+  (disciplined, opinionated, and owns that they are opinions) and **The Pace
+  Cadet** (encouraging, funny, here for the snacks). Rules-based JavaScript, no
+  AI service, no cost. Two coaches because there is no one right way to run.
 - **Shareable plans.** The URL updates live. "Share my plan" copies a link that
   rebuilds the exact plan; "Download plan" saves a clean, printable HTML summary
   you can keep or hand to a coach.
-- Remembers your last plan locally (localStorage only, nothing sent anywhere).
+- Remembers your last plan locally in your browser's localStorage. Plans are
+  never sent to a server.
 - Mobile-first layout.
 
 ## Deploying
@@ -50,6 +56,18 @@ height to the parent page via `postMessage` (`{type:"mc-height", height}`) so
 the iframe can auto-size; `index.html` shows the small listener. A fixed
 `height="1600"` also works. When embedded, the calculator switches to a compact
 header automatically.
+
+## The mini widget
+
+`widget.html` is a compact (340px) pace checker any site can embed in a
+sidebar. It converts a goal time to per-mile and per-km pace and links back to
+the full planner with the plan prefilled. Embed code (also available from the
+"Embed this calculator" link in the calculator footer):
+
+```
+<iframe src="https://marathoncalculator.com/widget" style="width:100%;max-width:360px;border:0;" height="330"
+  title="Race pace widget by MarathonCalculator.com" loading="lazy"></iframe>
+```
 
 ## Shareable URL format
 
