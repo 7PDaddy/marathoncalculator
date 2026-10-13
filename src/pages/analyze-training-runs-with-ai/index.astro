@@ -1,0 +1,118 @@
+---
+import Page from '../../layouts/Page.astro';
+const meta = {
+  title: 'What to Ask AI About Your Training Runs - MarathonCalculator',
+  description: 'How to get useful feedback on your training runs from an AI assistant: what to share, what to ask, and how to check it against your race plan.',
+  keywords: 'analyze running data with ai, chatgpt training run analysis, ai running feedback, marathon training analysis, positive split negative split analysis',
+  ogType: 'article',
+  ogTitle: 'What to Ask AI About Your Training Runs',
+  ogDescription: "What to share, what to ask, and how to check an AI assistant's feedback against your actual race plan.",
+  path: '/analyze-training-runs-with-ai/',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: 'What to Ask AI About Your Training Runs',
+    description: "What to share, what to ask, and how to check an AI assistant's feedback against your actual race plan.",
+    datePublished: '2026-10-13',
+    author: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    publisher: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    mainEntityOfPage: 'https://marathoncalculator.com/analyze-training-runs-with-ai/',
+  },
+};
+---
+<Page {...meta}>
+  <h1>What to Ask AI About Your Training Runs</h1>
+  <div class="postmeta">October 13, 2026 · Training</div>
+
+  <article>
+    <p>Your watch records everything and tells you almost nothing about what
+    to do next. An AI assistant is good at the next step: reading a pile of
+    splits and telling you what stands out. The quality of the answer depends
+    almost entirely on what you give it and what you ask. Here is how to do
+    both well.</p>
+
+    <h2>What to share</h2>
+    <ul>
+      <li><strong>Splits, not screenshots.</strong> Mile or kilometer splits as
+      plain text. Copy them from your app or export a CSV.</li>
+      <li><strong>Context for each run.</strong> Was it an easy run, a tempo, a
+      long run, a race? Heat, hills, and how you felt matter as much as the
+      numbers.</li>
+      <li><strong>The goal.</strong> The race, the date, and the pace you
+      want. Without it, advice has nothing to aim at.</li>
+      <li><strong>A few weeks, not one run.</strong> One run is noise. A
+      pattern across four to eight weeks is information.</li>
+    </ul>
+
+    <h2>Five questions worth asking</h2>
+    <h3>1. Did I run an even effort?</h3>
+    <blockquote class="prompt">
+      <p>Here are the mile splits from my 16 mile long run. Did I go out too
+      fast? Where did I start to slow down, and by how much? Was this a
+      positive split, negative split, or even?</p>
+    </blockquote>
+    <p>Fading late in long runs is the most useful thing to catch, because it
+    is exactly what happens in the marathon. If your long runs fade, your
+    race plan should expect it.</p>
+
+    <h3>2. Is my easy pace actually easy?</h3>
+    <blockquote class="prompt">
+      <p>These are my last ten easy runs. Compare my easy pace to my tempo and
+      race pace. Am I running easy days too hard to recover for the hard
+      ones?</p>
+    </blockquote>
+
+    <h3>3. Is my goal pace supported by my training?</h3>
+    <blockquote class="prompt">
+      <p>My goal marathon pace is 8:35 per mile. Based on these runs, what pace
+      have I actually shown I can hold, and for how long? What is the gap?</p>
+    </blockquote>
+    <p>This is the honest question. Put the same numbers into the calculator's
+    equivalency tool and compare. If the AI and the calculator land in the same
+    neighborhood, believe both. If they disagree, find out why before race
+    day.</p>
+
+    <h3>4. What is the weakest part of my training?</h3>
+    <blockquote class="prompt">
+      <p>Based on my weekly mileage and longest runs over the last 8 weeks,
+      what is the biggest gap between my training and a marathon? What is the
+      one thing I should change?</p>
+    </blockquote>
+
+    <h3>5. How should my race plan reflect all this?</h3>
+    <blockquote class="prompt">
+      <p>Given what you see, suggest a segment based pace plan for the marathon:
+      how fast to start, where to hold, and what to do if the last 10K falls
+      apart.</p>
+    </blockquote>
+    <p>Then build whatever it suggests as segments in the calculator. Seeing
+    the splits and the finish time turns advice into a plan you can run.</p>
+
+    <h2>Check it before you trust it</h2>
+    <ul>
+      <li>Recompute any pace or time it gives you. Fluent does not mean
+      correct.</li>
+      <li>Ask it what it is assuming and what data it would need to be more
+      sure.</li>
+      <li>Compare its read of your fade to what you remember feeling. If they
+      disagree, your memory of the run is data too.</li>
+      <li>Treat pain, dizziness, or anything medical as a reason to see a
+      professional, not an assistant.</li>
+    </ul>
+
+    <p>AI will not run the miles, and it does not know your body better than
+    you do. What it does well is notice patterns you were too close to see.
+    Pair that with a calculator that shows the plan, and you walk to the start
+    line knowing why you picked your pace.</p>
+  </article>
+
+  <div class="cta-box">Planning a race? Try the free
+    <a href="/">Marathon &amp; More Calculator</a>: build your splits, plan
+    segments, and see what your recent races predict.</div>
+
+  <div class="cta-box" style="margin-top:16px"><b>Keep reading:</b>
+    <a href="/use-ai-to-plan-your-marathon-pace/">How to Use AI to Plan Your Marathon Pace</a> ·
+    <a href="/journal/">The Marathon Journal</a></div>
+
+  <a class="backlink" href="/">&larr; Back to the calculator</a>
+</Page>

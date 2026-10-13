@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found - Marathon &amp; More Calculator</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>
+---
+import Base from '../layouts/Base.astro';
+const meta = {
+  "title": "Page Not Found - Marathon & More Calculator",
+  "robots": "noindex",
+  "path": "/404"
+};
+---
+<Base {...meta}>
+  <style slot="head" is:global>
   body{margin:0;background:#F4F5F1;color:#121A22;font-family:"Barlow",-apple-system,"Segoe UI",sans-serif;
        display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:20px}
   h1{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-weight:800;font-size:52px;
@@ -15,13 +16,10 @@
   p{color:#5C6672;margin:8px 0 20px}
   a{display:inline-block;font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:17px;
     background:#2447C7;color:#fff;text-decoration:none;padding:12px 26px;border-radius:8px}
-</style>
-</head>
-<body>
+  </style>
   <div>
     <h1>Wrong <span>Turn</span></h1>
     <p>This page missed a course marker. The race is back this way.</p>
     <a href="/">Back to the calculator</a>
   </div>
-</body>
-</html>
+</Base>

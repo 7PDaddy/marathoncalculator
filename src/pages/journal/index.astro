@@ -1,0 +1,31 @@
+---
+import Page from '../../layouts/Page.astro';
+import { entries } from '../../data/journal';
+const meta = {
+  title: 'Marathon Journal - MarathonCalculator',
+  description: 'A running journal: training for the Phoenix Marathon, with the calculator for the pace and AI for the second opinion. Honest notes, including what went wrong.',
+  path: '/journal/',
+};
+---
+<Page {...meta}>
+  <h1>The Marathon Journal</h1>
+  <div class="postmeta">Training for the Phoenix Marathon</div>
+
+  <article>
+    <p>This is where I think out loud while I train. I use the calculator to
+    find the pace I want, then work through whether that pace is realistic with
+    an AI assistant. Entries include what I tried, what it told me, and what it
+    got wrong.</p>
+    <ul class="entry-list">
+      {entries.map((e) => (
+        <li>
+          <a href={e.url}>{e.title}</a>
+          <span class="when">{e.date}</span>
+          {e.blurb}
+        </li>
+      ))}
+    </ul>
+  </article>
+
+  <a class="backlink" href="/">&larr; Back to the calculator</a>
+</Page>

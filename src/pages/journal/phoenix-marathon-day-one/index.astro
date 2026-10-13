@@ -1,0 +1,59 @@
+---
+import Page from '../../../layouts/Page.astro';
+const meta = {
+  title: 'Phoenix Marathon Journal: Day One - MarathonCalculator',
+  description: 'I decided to run the Phoenix Marathon. How I plan to use the calculator for the pace I want and AI to test whether it is realistic.',
+  ogType: 'article',
+  path: '/journal/phoenix-marathon-day-one/',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: 'Phoenix Marathon Journal: Day One',
+    description: 'I decided to run the Phoenix Marathon. How I plan to use the calculator and AI along the way.',
+    datePublished: '2026-10-13',
+    author: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    publisher: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    mainEntityOfPage: 'https://marathoncalculator.com/journal/phoenix-marathon-day-one/',
+  },
+};
+---
+<Page {...meta}>
+  <h1>Phoenix Marathon Journal: Day One</h1>
+  <div class="postmeta">October 13, 2026 · Journal</div>
+
+  <article>
+    <p>Today I decided to run the Phoenix Marathon.</p>
+
+    <p>I have been using AI to look at my training runs, to plan the pace I
+    want, and to pressure test what is realistic and what is not. This journal
+    is where I will do more of that in public, and write down how it goes.</p>
+
+    <h2>The plan for the plan</h2>
+    <p>I am not treating AI as a replacement for the calculator or the other
+    way around. The calculator is how I find the pace I want and see the
+    splits. AI is how I argue with that pace before the race does. Together
+    they give me a much clearer picture than either one does alone.</p>
+
+    <p>If you want the method, I wrote it up in two guides:
+    <a href="/use-ai-to-plan-your-marathon-pace/">how to use AI to plan your marathon pace</a>
+    and <a href="/analyze-training-runs-with-ai/">what to ask AI about your training runs</a>.</p>
+
+    <h2>What I will report back</h2>
+    <ul>
+      <li>The pace I pick, and the plan behind it, as a live link you can open
+      in the calculator.</li>
+      <li>What AI said was realistic, what it said was not, and where I
+      disagreed.</li>
+      <li>What it got wrong. It will get some of it wrong.</li>
+      <li>How training actually went against the plan.</li>
+    </ul>
+
+    <p>More soon.</p>
+  </article>
+
+  <div class="cta-box">Planning a race? Try the free
+    <a href="/">Marathon &amp; More Calculator</a>: build your splits, plan
+    segments, and see what your recent races predict.</div>
+
+  <a class="backlink" href="/journal/">&larr; All journal entries</a>
+</Page>

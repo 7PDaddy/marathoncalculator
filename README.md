@@ -6,17 +6,21 @@ that account for whether you actually did the training.
 
 **Live site:** https://marathoncalculator.com
 
-Plain HTML/CSS/JS in a single file. No frameworks, no build step, no server,
-no ads, no cookies, no signup. The only measurement is anonymous, cookieless
-visit counting, described on the site's privacy page.
+The calculator is plain HTML/CSS/JS in a single self-contained file: no
+frameworks, no dependencies, works offline. The surrounding site is a small
+[Astro](https://astro.build) project that builds to static files. No server, no
+ads, no cookies, no signup. The only measurement is anonymous, cookieless visit
+counting (GoatCounter), described on the site's privacy page.
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `calculator.html` | The complete calculator. Standalone and embeddable. |
-| `index.html` | The homepage. Embeds the calculator via iframe, so the site and the tool can evolve independently. |
-| `about.html` | "How We Built It": the math, the variables, and the runner types behind the tool. |
+| `public/calculator.html` | The complete calculator. Standalone and embeddable. Copied to the site untouched, never processed by Astro. |
+| `public/widget.html` | The compact embeddable pace widget. |
+| `src/pages/` | Site pages: homepage (embeds the calculator via iframe), "How We Built It", privacy, and blog posts. |
+| `src/layouts/` | Shared page shell (`Base`) and blog layout (`Page`). |
+| `src/data/posts.ts` | Blog post list that feeds the homepage teasers. |
 | `LICENSE` | MIT. |
 
 ## Features
@@ -45,8 +49,15 @@ visit counting, described on the site's privacy page.
 
 ## Deploying
 
-All files go in the repo root. Works on Cloudflare Pages, GitHub Pages, Netlify,
-or any static host. No build command.
+```
+npm install
+npm run dev      # local preview
+npm run build    # static site into dist/
+```
+
+On Cloudflare Pages: build command `npm run build`, output directory `dist`.
+Pushing to `main` redeploys. The output is plain static files, so any static
+host works.
 
 ## Embedding on your own site
 
@@ -87,7 +98,7 @@ the full planner with the plan prefilled. Embed code (also available from the
 
 ## Contributing
 
-Bug reports, math arguments, and pull requests are all welcome. The whole tool
+Bug reports, math arguments, and pull requests are all welcome. The calculator
 is one HTML file, so it's easy to read and easy to change. If you think the
 exponent range, the runner types, or anything else should work differently,
 open an issue and make your case. Runners arguing about pacing is a feature.

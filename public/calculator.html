@@ -339,6 +339,17 @@
     .block-row{align-items:stretch}
   }
 </style>
+<script>
+  // Count visits to the full-page calculator only. When it is embedded in the
+  // homepage or on another site, the host page is what gets counted.
+  if (window.top === window.self) {
+    var gc = document.createElement("script");
+    gc.async = true;
+    gc.dataset.goatcounter = "https://marathon.goatcounter.com/count";
+    gc.src = "//gc.zgo.at/count.js";
+    document.head.appendChild(gc);
+  }
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -380,7 +391,7 @@
       <div>
         <label for="goalTime">Goal time</label>
         <input type="text" id="goalTime" inputmode="numeric" placeholder="3:45:00" autocomplete="off">
-        <div class="hint">h:mm:ss or mm:ss</div>
+        <div class="hint">h:mm:ss, h:mm, or mm:ss</div>
       </div>
       <div>
         <label for="goalPace">Pace (per <span class="unitTxt">mi</span>)</label>
@@ -440,6 +451,7 @@
       </div>
     </div>
     <table id="splitTable">
+      <caption style="position:absolute;left:-9999px">Mile by mile split pace and elapsed time</caption>
       <thead>
         <tr><th id="thDist">Mile</th><th>Split pace</th><th>Elapsed</th></tr>
       </thead>
@@ -468,11 +480,12 @@
     </h2>
     <p class="explainer" id="infoTextEq" hidden>
       Predictions use the <b>Riegel formula</b>: T&#8322; = T&#8321; &times; (D&#8322;/D&#8321;)<sup>exponent</sup>.
-      The standard exponent (1.06) assumes you've <b>done the training for the longer
+      The slider sets the exponent for a 5K to marathon prediction, and the standard 1.06 assumes you've <b>done the training for the longer
       distance</b> - the weekly mileage and the long runs. So the slider is really
       asking: <i>are you properly trained for it, or are you going to gut it out on
       shorter-race fitness?</i> Gutting it out means fading late, real-world
-      exponents for undertrained marathoners run as high as 1.12, so slide left.
+      exponents for undertrained marathoners run as high as 1.12, so slide left. Anything under 10K always uses 1.06,
+      because the long-run fade only shows up on longer races.
       High-mileage runners who hold pace forever sit near 1.04, slide right.
     </p>
     <p class="hint" style="margin:0">
@@ -483,8 +496,8 @@
 
     <div class="row" style="align-items:flex-end">
       <div style="flex:2 1 220px">
-        <label>I ran / can run a…</label>
-        <div class="chips" id="eqChips" role="group" aria-label="Equivalency race distance">
+        <label id="eqChipsLabel">I ran / can run a…</label>
+        <div class="chips" id="eqChips" role="group" aria-labelledby="eqChipsLabel">
           <button class="chip" data-d="5k">5K</button>
           <button class="chip" data-d="10k">10K</button>
           <button class="chip" data-d="half" aria-pressed="true">Half</button>
@@ -592,12 +605,44 @@
     if (p.length === 2) return p[0]*60 + p[1];
     return p[0]*60; // bare number = minutes
   }
+  // Race times: a two-part entry is mm:ss, unless that would be an impossible
+  // pace. Then it is h:mm, so "3:45" for a marathon means 3 hours 45 minutes.
+  var FASTEST_SEC_PER_KM = 150; // faster than any human, so it must be h:mm
+  function parseRaceTime(str, km){
+    var s = parseTime(str);
+    if (s === null || !(km > 0)) return s;
+    if (/^\d{1,3}:\d{1,2}$/.test(String(str).trim()) && s / km < FASTEST_SEC_PER_KM){
+      var p = String(str).trim().split(":").map(Number);
+      var alt = p[0]*3600 + p[1]*60;
+      if (p[1] < 60 && alt / km >= FASTEST_SEC_PER_KM && alt / km < 1800) return alt;
+    }
+    return s;
+  }
   // "8:35" | "8" (minutes per unit)
   function parsePace(str){
     var s = parseTime(str);
     return (s !== null && s > 0 && s < 3600) ? s : null;
   }
   function num(v){ var n = parseFloat(v); return isFinite(n) && n > 0 ? n : null; }
+
+  /* ---------------- race prediction ----------------
+     The profile slider is the effective exponent for a 5K to marathon
+     prediction (so 1.06 is plain Riegel). Underneath, shorter-than-10K ground
+     always uses 1.06: nobody fades at 10K for lack of long runs. The extra
+     fade (or extra endurance) is applied to the ground past 10K, scaled so the
+     5K to marathon answer is exactly what the slider promises. */
+  var PIVOT_KM = 10, BASE_EXP = 1.06;
+  function longExp(exp){
+    var a = Math.log(PIVOT_KM / 5), b = Math.log(DIST_KM.marathon / PIVOT_KM);
+    return (exp * (a + b) - BASE_EXP * a) / b;
+  }
+  function predictTime(t1, d1, d2, exp){
+    var lo = Math.min(d1, d2), hi = Math.max(d1, d2), e2 = longExp(exp);
+    var below = lo < PIVOT_KM ? Math.log(Math.min(hi, PIVOT_KM) / lo) : 0;
+    var above = hi > PIVOT_KM ? Math.log(hi / Math.max(lo, PIVOT_KM)) : 0;
+    var sign = d2 >= d1 ? 1 : -1;
+    return t1 * Math.exp(sign * (BASE_EXP * below + e2 * above));
+  }
 
   /* ---------------- blocks model ----------------
      Every block: {dist, paceSec}. Last block's dist is null => remainder. */
@@ -856,7 +901,7 @@
 
     // 2. honesty check vs equivalency input
     if (state.eqSec > 0 && DIST_KM[state.eqKey] && state.eqKey !== state.distKey && raceKm() > 0){
-      var pred = state.eqSec * Math.pow(raceKm() / DIST_KM[state.eqKey], state.exp);
+      var pred = predictTime(state.eqSec, DIST_KM[state.eqKey], raceKm(), state.exp);
       var gap = (pred - t) / pred;
       if (gap > 0.03) add(true, "\uD83E\uDD14",
         "Your " + DIST_LABEL[state.eqKey] + " predicts " + fmtTime(pred) + " here, but the goal says " + fmtTime(t) + ". Something has to close that gap: training, or the goal. Your call, but I would decide now, not at mile 22.",
@@ -935,6 +980,7 @@
     var names = state.exp > 1.075 ? "Speed favoring · fades over distance" :
                 state.exp < 1.050 ? "Endurance monster · holds pace" : "Balanced";
     $("profileNow").textContent = names + "  ·  exponent " + state.exp.toFixed(3);
+    slider.setAttribute("aria-valuetext", names + ", exponent " + state.exp.toFixed(3));
 
     document.querySelectorAll("#eqChips .chip").forEach(function(c){
       c.setAttribute("aria-pressed", c.dataset.d === state.eqKey ? "true" : "false");
@@ -951,7 +997,7 @@
     order.forEach(function(k){
       var d2 = DIST_KM[k];
       var isCurrent = state.eqKey === k;
-      var t2 = isCurrent ? t1 : t1 * Math.pow(d2 / d1, state.exp);
+      var t2 = isCurrent ? t1 : predictTime(t1, d1, d2, state.exp);
       var perUnitKm = state.unit === "mi" ? KM_PER_MI : 1;
       var paceSec = t2 / (d2 / perUnitKm);
 
@@ -992,6 +1038,10 @@
   function readURL(){
     if (!location.search || location.search === "?") return false;
     var p = new URLSearchParams(location.search);
+    // A shared link carries the whole plan: drop anything saved locally that the
+    // link does not mention, so it rebuilds exactly what was shared.
+    state.voice = "nerd";
+    if (!p.get("eqt")) state.eqSec = null;
 
     var d = p.get("d");
     if (d && (DIST_KM[d] || d === "custom")) state.distKey = d;
@@ -1117,7 +1167,7 @@
   customDistEl.addEventListener("blur", function(){ update(); });
 
   goalTimeEl.addEventListener("input", function(){
-    var t = parseTime(goalTimeEl.value);
+    var t = parseRaceTime(goalTimeEl.value, raceKm());
     goalTimeEl.classList.toggle("invalid", t === null);
     if (t !== null && state.mode === "even"){
       state.goalSec = t;
@@ -1173,7 +1223,7 @@
     });
   });
   eqTimeEl.addEventListener("input", function(){
-    var t = parseTime(eqTimeEl.value);
+    var t = parseRaceTime(eqTimeEl.value, DIST_KM[state.eqKey]);
     eqTimeEl.classList.toggle("invalid", t === null);
     if (t !== null){ state.eqSec = t; renderEquivalency(); renderCoach(); syncURL(); save(); }
   });

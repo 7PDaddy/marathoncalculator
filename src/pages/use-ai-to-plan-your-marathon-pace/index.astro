@@ -1,0 +1,124 @@
+---
+import Page from '../../layouts/Page.astro';
+const meta = {
+  title: 'How to Use AI to Plan Your Marathon Pace - MarathonCalculator',
+  description: 'Use the calculator to build the pace you want, then use AI to pressure test it: what is realistic, what is not, and what to change. Prompts included.',
+  keywords: 'use ai for marathon training, chatgpt marathon pace plan, ai running coach, realistic marathon goal pace, marathon pace planning',
+  ogType: 'article',
+  ogTitle: 'How to Use AI to Plan Your Marathon Pace',
+  ogDescription: 'Build the pace in the calculator, then pressure test it with AI. The workflow, the prompts, and where AI gets it wrong.',
+  path: '/use-ai-to-plan-your-marathon-pace/',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: 'How to Use AI to Plan Your Marathon Pace',
+    description: 'Build the pace in the calculator, then pressure test it with AI. The workflow, the prompts, and where AI gets it wrong.',
+    datePublished: '2026-10-13',
+    author: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    publisher: { '@type': 'Organization', name: 'MarathonCalculator.com' },
+    mainEntityOfPage: 'https://marathoncalculator.com/use-ai-to-plan-your-marathon-pace/',
+  },
+};
+---
+<Page {...meta}>
+  <h1>How to Use AI to Plan Your Marathon Pace</h1>
+  <div class="postmeta">October 13, 2026 · Training</div>
+
+  <article>
+    <p>This site has no chatbot and never will. The calculator does the math in
+    your browser and nothing you enter leaves it. But plenty of runners also
+    use an AI assistant to think through training, and used well, the two tools
+    complement each other. Here is the workflow that works, and the places it
+    goes wrong.</p>
+
+    <h2>Step 1: Let the calculator pick the pace</h2>
+    <p>Start with the part a calculator is built for. Enter the race and the
+    time you are dreaming about and look at the pace per mile or kilometer.
+    Then use the race equivalency tool to see what a recent race predicts, and
+    set the runner profile slider honestly: did the long runs happen or not?</p>
+    <p>Here is a worked example. A runner with a 1:45:00 half marathon wants to
+    run 3:45:00. The same half predicts very different marathons depending on
+    training:</p>
+    <ul>
+      <li>Endurance monster (1.04): 3:34:28</li>
+      <li>Textbook (1.06): 3:38:55</li>
+      <li>Light on long runs (1.09): 3:45:46</li>
+      <li>Fades over distance (1.12): 3:52:50</li>
+    </ul>
+    <p>So 3:45 is realistic for this runner only if the training looks like the
+    1.09 row or better. That one number, <strong>8:35 per mile</strong>, is now
+    the thing to test.</p>
+    <div class="plan">
+      <h3>The plan to test</h3>
+      <p class="stats">3:45:00 goal &middot; 8:35 per mile &middot; half marathon 1:45:00 &middot; profile 1.09</p>
+      <a class="plan-btn" href="/?d=marathon&amp;u=mi&amp;mode=even&amp;t=3:45:00&amp;eq=half&amp;eqt=1:45:00&amp;profile=1.090">Open this plan in the calculator</a>
+    </div>
+
+    <h2>Step 2: Hand the plan to AI as a skeptic</h2>
+    <p>The calculator tells you what the numbers say. It cannot tell you
+    whether your last six weeks of running back that up. This is where AI is
+    useful: as a skeptical training partner that asks what you have not
+    considered. Give it the plan and your honest background, then ask it to
+    argue against you.</p>
+    <blockquote class="prompt">
+      <p>I want to run a 3:45 marathon, which is 8:35 per mile. My best recent
+      race is a 1:45 half marathon. My longest run in the last 8 weeks was 14
+      miles and I average 25 miles a week. Be a skeptical coach. What is
+      realistic and what is not? What would have to be true for 8:35 to work,
+      and what would you change about the plan?</p>
+    </blockquote>
+    <p>Notice what is in that prompt: the goal, the evidence, and a request to
+    push back. Without that last part, most assistants are agreeable and tell
+    you the goal sounds great.</p>
+
+    <h2>Step 3: Ask for the fade, not just the finish</h2>
+    <p>Most marathon goals fail in the last six miles, so ask about that
+    directly.</p>
+    <blockquote class="prompt">
+      <p>Given my training, where in the race am I most likely to slow down,
+      and by how much? Suggest a segment plan with a controlled start, and tell
+      me which miles to watch.</p>
+    </blockquote>
+    <p>Take the answer back to the calculator and build it as segments. Now you
+    can see the exact splits, the finish time, and whether the fade you planned
+    still gets you to the goal. If it does not, you have just learned that
+    before race day instead of during it.</p>
+
+    <h2>Where AI goes wrong</h2>
+    <ul>
+      <li><strong>Arithmetic.</strong> Assistants are fluent and still make
+      math mistakes, especially with times in h:mm:ss. Take pace and finish
+      math from the calculator, not from the chat.</li>
+      <li><strong>Agreement.</strong> If you only ask for encouragement, you
+      get it. Ask it to find the weak point in your plan.</li>
+      <li><strong>Your body.</strong> It cannot see your injury history,
+      your sleep, or how that last long run really felt. It is not a doctor.
+      Anything involving pain, heart symptoms, or medical risk belongs with a
+      professional.</li>
+      <li><strong>Confidence.</strong> It will sound sure even when it is
+      guessing. Treat the output as questions to take to your own training
+      log, not as orders.</li>
+    </ul>
+
+    <h2>A note on privacy</h2>
+    <p>Run times and weekly mileage are enough for pace planning. You do not
+    need to paste names, home locations, or health records into a chat to get
+    useful help, and it is worth checking what your assistant does with what
+    you share.</p>
+
+    <p>The short version: the calculator gives you the pace you want, and AI
+    helps you decide whether you have earned it. Together they are better than
+    either alone.</p>
+  </article>
+
+  <div class="cta-box">Planning a race? Try the free
+    <a href="/">Marathon &amp; More Calculator</a>: build your splits, plan
+    segments, and see what your recent races predict.</div>
+
+  <div class="cta-box" style="margin-top:16px"><b>Keep reading:</b>
+    <a href="/analyze-training-runs-with-ai/">What to Ask AI About Your Training Runs</a> ·
+    <a href="/sub-4-hour-marathon-pace/">Sub-4 Hour Marathon: Three Pace Plans That Actually Work</a> ·
+    <a href="/journal/">The Marathon Journal</a></div>
+
+  <a class="backlink" href="/">&larr; Back to the calculator</a>
+</Page>

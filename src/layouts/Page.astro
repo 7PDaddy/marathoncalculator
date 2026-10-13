@@ -1,0 +1,28 @@
+---
+// Blog post / simple content page: brand header, nav, content slot, footer.
+import Base from './Base.astro';
+import './post.css';
+const props = Astro.props;
+---
+<Base {...props}>
+  <slot name="head" slot="head" />
+  <div class="wrap">
+    <header>
+      <div class="brand"><a href="/">Marathon <em>&amp; More</em> Calculator</a></div>
+      <nav>
+        <a href="/">Calculator</a>
+        <a href="/journal/">Journal</a>
+        <a href="/about">How we built it</a>
+        <a href="/marathoncalculator/">About us</a>
+        <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer>
+      <a href="https://marathoncalculator.com">MarathonCalculator.com</a> ·
+      free &amp; open source · built by a runner, for runners
+    </footer>
+  </div>
+</Base>

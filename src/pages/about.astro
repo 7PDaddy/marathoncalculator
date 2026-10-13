@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How We Built It - Marathon &amp; More Calculator</title>
-<meta name="description" content="The math, variables, and runner types behind the Marathon and More Calculator, and why one formula does not fit every marathoner.">
-<meta name="keywords" content="Riegel formula, marathon prediction math, race time prediction, marathon exponent, runner types, marathon pacing strategy, open source running calculator">
-<link rel="canonical" href="https://marathoncalculator.com/about">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="article">
-<meta property="og:title" content="How We Built It - Marathon &amp; More Calculator">
-<meta property="og:description" content="The math, the variables, and the runner types behind the Marathon and More Calculator.">
-<meta property="og:url" content="https://marathoncalculator.com/about">
-<meta property="og:site_name" content="Marathon &amp; More Calculator">
-<meta property="og:image" content="https://marathoncalculator.com/images/founder-running.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"How We Built the Marathon & More Calculator","description":"The math, the variables, and the runner types behind the calculator.","author":{"@type":"Organization","name":"MarathonCalculator.com"},"publisher":{"@type":"Organization","name":"MarathonCalculator.com"},"image":"https://marathoncalculator.com/images/founder-running.jpg","mainEntityOfPage":"https://marathoncalculator.com/about"}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+---
+import Base from '../layouts/Base.astro';
+const meta = {
+  "ogImage": "/images/founder-running.jpg",
+  "title": "How We Built It - Marathon & More Calculator",
+  "description": "The math, variables, and runner types behind the Marathon and More Calculator, and why one formula does not fit every marathoner.",
+  "keywords": "Riegel formula, marathon prediction math, race time prediction, marathon exponent, runner types, marathon pacing strategy, open source running calculator",
+  "ogType": "article",
+  "ogDescription": "The math, the variables, and the runner types behind the Marathon and More Calculator.",
+  "path": "/about",
+  "jsonLd": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How We Built the Marathon & More Calculator",
+    "description": "The math, the variables, and the runner types behind the calculator.",
+    "author": {
+      "@type": "Organization",
+      "name": "MarathonCalculator.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MarathonCalculator.com"
+    },
+    "image": "https://marathoncalculator.com/images/founder-running.jpg",
+    "mainEntityOfPage": "https://marathoncalculator.com/about"
+  }
+};
+---
+<Base {...meta}>
+  <style slot="head" is:global>
   :root{
     --paper:#F4F5F1; --card:#FFFFFF; --ink:#121A22; --muted:#5C6672;
     --line:#E2E5DD; --blue:#2447C7; --blue-deep:#16307F; --blue-soft:#E9EDFB;
@@ -108,9 +114,7 @@
 
   footer{margin-top:44px; font-size:13.5px; color:var(--muted); text-align:center; border-top:1px solid var(--line); padding-top:16px}
   footer a{color:var(--blue)}
-</style>
-</head>
-<body>
+  </style>
 <div class="wrap">
 
   <header>
@@ -178,6 +182,10 @@
     an exponent near 1.09-1.11, and it's why our slider goes to 1.12 on the
     "speed favoring" side while holding 1.04 on the endurance side.
   </div>
+  <p>One refinement: the slider sets the exponent for a 5K to marathon prediction,
+  but the extra fade only applies to distances past 10K. Anything shorter always
+  uses the textbook 1.06, because nobody slows down at 10K for lack of long runs.
+  A 5K to 10K prediction stays the same no matter where the slider sits.</p>
   <p>The slider is really asking one honest question: <b>did you do the training,
   or are you going to gut it out on shorter-race fitness?</b> Both are legitimate
   ways to run a marathon. Only one of them should trust the textbook number.</p>
@@ -257,7 +265,7 @@
 
   <h2>Open source, no strings</h2>
   <p>The whole calculator is plain HTML, CSS, and JavaScript in a single file. No
-  frameworks, no build step, no tracking, no ads, no signup. It's MIT licensed:
+  frameworks, no dependencies, no cookies, no ads, no signup. It's MIT licensed:
   use it, copy it, embed it on your site, improve it. If you find a bug or think
   the math should work differently, open an issue or a pull request.</p>
   <p>
@@ -271,5 +279,4 @@
     free &amp; open source · built by a runner, for runners
   </footer>
 </div>
-</body>
-</html>
+</Base>

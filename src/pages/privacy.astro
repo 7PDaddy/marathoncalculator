@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy - Marathon &amp; More Calculator</title>
-<meta name="description" content="Exactly what MarathonCalculator.com measures and what it never collects. Plain English, no legal fog.">
-<link rel="canonical" href="https://marathoncalculator.com/privacy">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Privacy - Marathon &amp; More Calculator">
-<meta property="og:description" content="Exactly what we measure and what we never collect. Plain English, no legal fog.">
-<meta property="og:url" content="https://marathoncalculator.com/privacy">
-<meta property="og:site_name" content="Marathon &amp; More Calculator">
-<meta property="og:image" content="https://marathoncalculator.com/images/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+---
+import Base from '../layouts/Base.astro';
+const meta = {
+  "title": "Privacy - Marathon & More Calculator",
+  "description": "Exactly what MarathonCalculator.com measures and what it never collects. Plain English, no legal fog.",
+  "ogType": "website",
+  "ogDescription": "Exactly what we measure and what we never collect. Plain English, no legal fog.",
+  "path": "/privacy"
+};
+---
+<Base {...meta}>
+  <style slot="head" is:global>
   :root{
     --paper:#F4F5F1; --ink:#121A22; --muted:#5C6672; --line:#E2E5DD;
     --blue:#2447C7; --tape:#FFD23F;
@@ -49,9 +39,7 @@
   footer{margin-top:44px; font-size:13.5px; color:var(--muted); text-align:center; border-top:1px solid var(--line); padding-top:16px}
   footer a{color:var(--blue)}
   @media (prefers-reduced-motion: reduce){ *,*::before,*::after{transition:none !important} }
-</style>
-</head>
-<body>
+  </style>
 <div class="wrap">
   <header>
     <div class="brand"><a href="/">Marathon <em>&amp; More</em> Calculator</a></div>
@@ -69,10 +57,10 @@
 
   <h2>What we measure</h2>
   <div class="yes">
-    <p><b>Anonymous visit counts.</b> We use Ahrefs Web Analytics, a cookieless,
+    <p><b>Anonymous visit counts.</b> We use GoatCounter, a cookieless,
     privacy-focused counter. It tells us things like which pages get visited,
-    roughly what country visits come from, and what kind of device was used
-    (phone or desktop). That is how we know whether anyone finds the site useful.</p>
+    where visitors came from, roughly what country visits come from, and what
+    kind of device was used (phone or desktop). That is how we know whether anyone finds the site useful.</p>
   </div>
 
   <h2>What we never collect</h2>
@@ -95,8 +83,9 @@
     (including IP addresses) to deliver pages.</li>
     <li><b>Google Fonts</b> serves the site's typefaces from Google's servers,
     which sees standard font requests, as on most of the web.</li>
-    <li><b>Ahrefs</b> provides the anonymous, cookieless visit counting
-    described above.</li>
+    <li><b>GoatCounter</b> provides the anonymous, cookieless visit counting
+    described above. It runs only on the site pages and the full-page
+    calculator, never inside embeds on other sites.</li>
     <li><b>YouTube</b> appears only on one blog post that embeds a video, and
     only loads if you visit that post.</li>
   </ul>
@@ -115,5 +104,4 @@
     free &amp; open source · built by a runner, for runners
   </footer>
 </div>
-</body>
-</html>
+</Base>
