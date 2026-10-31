@@ -2,7 +2,16 @@
 // Blog post / simple content page: brand header, nav, content slot, footer.
 import Base from './Base.astro';
 import './post.css';
-const props = Astro.props;
+import { posts } from '../data/posts';
+const post = posts.find((p) => p.url === Astro.props.path);
+const image = post?.image;
+const props = {
+  ...Astro.props,
+  ...(image ? { ogImage: image } : {}),
+  ...(image && Astro.props.jsonLd
+    ? { jsonLd: { ...Astro.props.jsonLd, image: new URL(image, 'https://marathoncalculator.com').href } }
+    : {}),
+};
 ---
 <Base {...props}>
   <slot name="head" slot="head" />
@@ -11,12 +20,19 @@ const props = Astro.props;
       <div class="brand"><a href="/">Marathon <em>&amp; More</em> Calculator</a></div>
       <nav>
         <a href="/">Calculator</a>
+        <a href="/blog/">Blog</a>
         <a href="/journal/">Journal</a>
         <a href="/about">How we built it</a>
         <a href="/marathoncalculator/">About us</a>
         <a href="https://github.com/7pdaddy/marathoncalculator">GitHub</a>
       </nav>
     </header>
+
+    {image && (
+      <figure class="hero-img">
+        <img src={image} alt={post?.alt ?? ''} width="1200" height="630" fetchpriority="high">
+      </figure>
+    )}
 
     <slot />
 

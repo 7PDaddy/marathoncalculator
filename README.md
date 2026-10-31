@@ -20,7 +20,7 @@ counting (GoatCounter), described on the site's privacy page.
 | `public/widget.html` | The compact embeddable pace widget. |
 | `src/pages/` | Site pages: homepage (embeds the calculator via iframe), "How We Built It", privacy, and blog posts. |
 | `src/layouts/` | Shared page shell (`Base`) and blog layout (`Page`). |
-| `src/data/posts.ts` | Blog post list that feeds the homepage teasers. |
+| `src/data/posts.ts` | Blog post list. Feeds the latest 5 on the homepage and every post on `/blog/`. Add `image` and `alt` to a post to give it a photo (1200x630, in `public/images/blog/`). |
 | `LICENSE` | MIT. |
 
 ## Features

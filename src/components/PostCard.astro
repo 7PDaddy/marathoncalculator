@@ -1,0 +1,37 @@
+---
+// One post on /blog/: thumbnail (real photo if the post has one, otherwise the
+// branded 26.2 card), title, date, blurb.
+import type { Post } from '../data/posts';
+const { post } = Astro.props as { post: Post };
+---
+<article class="card">
+  <a class="thumb-link" href={post.url} tabindex="-1" aria-hidden="true">
+    {post.image ? (
+      <img class="thumb" src={post.image} alt="" width="1200" height="630" loading="lazy">
+    ) : (
+      <div class="thumb fallback"><span>26.2</span></div>
+    )}
+  </a>
+  <div class="body">
+    <h2><a href={post.url}>{post.title}</a></h2>
+    <div class="when">{post.date}</div>
+    <p>{post.blurb}</p>
+  </div>
+</article>
+
+<style>
+  .card{display:grid; grid-template-columns:200px 1fr; gap:18px; align-items:center; padding:18px 0; border-bottom:1px solid var(--line)}
+  .thumb-link{display:block}
+  .thumb{display:block; width:100%; aspect-ratio:1200/630; object-fit:cover; border-radius:10px; border:1.5px solid var(--line)}
+  .fallback{background:var(--blue); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center}
+  .fallback::after{content:""; position:absolute; left:0; right:0; bottom:16%; height:9%; background:var(--tape)}
+  .fallback span{font-family:var(--disp); font-weight:800; font-size:30px; color:#fff; letter-spacing:.5px; margin-bottom:6%}
+  h2{font-family:var(--disp); font-weight:700; font-size:20px; line-height:1.2; margin:0 0 4px; border:0; padding:0; text-transform:none; letter-spacing:0}
+  h2 a{color:var(--ink); text-decoration:none}
+  h2 a:hover{color:var(--blue)}
+  .when{color:var(--muted); font-size:14px; margin-bottom:4px}
+  p{margin:0; color:var(--muted); font-size:15px}
+  @media (max-width:560px){
+    .card{grid-template-columns:1fr; gap:12px}
+  }
+</style>

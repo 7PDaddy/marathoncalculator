@@ -1,5 +1,12 @@
-// Blog posts, newest first. Drives the homepage teasers.
-export interface Post { title: string; url: string; date: string; blurb: string; }
+// Blog posts, newest first. Drives the homepage teasers (latest 5) and /blog/.
+//
+// To add a real photo to a post, put a 1200x630 image in public/images/blog/
+// and add both fields to the post below, for example:
+//   image: '/images/blog/sub-4-plans.jpg', alt: 'Runner checking a pace band at mile 20',
+// The same image then becomes the post's header, its social share image, and
+// its thumbnail on /blog/. Posts without an image get the branded 26.2 card.
+// alt is required whenever image is set: describe what is in the photo.
+export interface Post { title: string; url: string; date: string; blurb: string; image?: string; alt?: string; }
 
 export const posts: Post[] = [
   { title: 'How to Use AI to Plan Your Marathon Pace', url: '/use-ai-to-plan-your-marathon-pace/', date: 'October 13, 2026', blurb: 'Build the pace in the calculator, then pressure test it with AI. The workflow, the prompts, and where AI gets it wrong.' },

@@ -60,6 +60,9 @@ const meta = {
   article h3 a{color:var(--ink); text-decoration:none}
   article h3 a:hover{color:var(--blue)}
   article p{margin:0; color:var(--muted); font-size:15px}
+  .allposts{margin:16px 0 0; text-align:center}
+  .allposts a{font-family:"Barlow Semi Condensed",sans-serif; font-weight:700; letter-spacing:.3px; text-transform:uppercase; font-size:15px; color:var(--blue); text-decoration:none}
+  .allposts a:hover{text-decoration:underline}
 
   .features{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin-top:40px}
   .feature{background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:18px}
@@ -110,7 +113,7 @@ const meta = {
     <h1>Marathon <span>&amp; More</span> Calculator</h1>
     <nav class="mainnav" aria-label="Site">
       <a href="#calculator">Calculator</a>
-      <a href="#blog">Blog</a>
+      <a href="/blog/">Blog</a>
       <a href="/journal/">Journal</a>
       <a href="/about">How we built it</a>
       <a href="/marathoncalculator/">About us</a>
@@ -162,12 +165,13 @@ const meta = {
   <!-- ====== Blog ====== -->
   <section class="posts" id="blog">
     <h2>From the blog</h2>
-    {posts.map((p) => (
+    {posts.slice(0, 5).map((p) => (
       <article>
         <h3><a href={p.url}>{p.title}</a></h3>
         <p>{p.date} - {p.blurb}</p>
       </article>
     ))}
+    <p class="allposts"><a href="/blog/">All posts &rarr;</a></p>
   </section>
 
   <footer>
@@ -181,7 +185,7 @@ const meta = {
         <h4>Learn</h4>
         <a href="/about">How We Built It</a>
         <a href="/marathoncalculator/">About Us</a>
-        <a href="#blog">Blog</a>
+        <a href="/blog/">Blog</a>
         <a href="/journal/">Marathon Journal</a>
       </div>
       <div>
