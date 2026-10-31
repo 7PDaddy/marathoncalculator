@@ -5,7 +5,14 @@ const meta = {
   "description": "Exactly what MarathonCalculator.com measures and what it never collects. Plain English, no legal fog.",
   "ogType": "website",
   "ogDescription": "Exactly what we measure and what we never collect. Plain English, no legal fog.",
-  "path": "/privacy"
+  "path": "/privacy",
+  "jsonLd": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy, in Plain English",
+    "url": "https://marathoncalculator.com/privacy",
+    "isPartOf": { "@type": "WebSite", "name": "Marathon & More Calculator", "url": "https://marathoncalculator.com/" }
+  }
 };
 ---
 <Base {...meta}>

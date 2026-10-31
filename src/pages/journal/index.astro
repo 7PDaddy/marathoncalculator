@@ -5,6 +5,14 @@ const meta = {
   title: 'Marathon Journal - MarathonCalculator',
   description: 'A running journal: training for the Phoenix Marathon, with the calculator for the pace and AI for the second opinion. Honest notes, including what went wrong.',
   path: '/journal/',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Marathon Journal',
+    url: 'https://marathoncalculator.com/journal/',
+    description: 'A running journal: training for the Phoenix Marathon, with the calculator for the pace and AI for the second opinion.',
+    isPartOf: { '@type': 'WebSite', name: 'Marathon & More Calculator', url: 'https://marathoncalculator.com/' },
+  },
 };
 ---
 <Page {...meta}>
