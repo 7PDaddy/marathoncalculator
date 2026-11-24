@@ -3,3 +3,4 @@ dist
 .astro
 .wrangler
 HANDOFF-claude-project.md
+private-log/
