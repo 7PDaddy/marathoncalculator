@@ -77,7 +77,7 @@
   </url>
   <url>
     <loc>https://marathoncalculator.com/journal/</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -88,6 +88,11 @@
   <url>
     <loc>https://marathoncalculator.com/journal/mostly-downs-and-a-decision-rule/</loc>
     <lastmod>2026-11-24</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://marathoncalculator.com/journal/turkey-trot-10-miler-and-the-marathon-math/</loc>
+    <lastmod>2026-11-26</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>
