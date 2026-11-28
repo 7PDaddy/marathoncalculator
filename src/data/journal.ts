@@ -2,6 +2,7 @@
 export interface Entry { title: string; url: string; date: string; blurb: string; }
 
 export const entries: Entry[] = [
+  { title: 'Training Journal: Registered for Vegas, Six Weeks to Build', url: '/journal/registered-for-vegas/', date: 'November 27, 2026', blurb: 'I signed up for the January 10 marathon with a 20 percent off code. Now the holidays, a tight back, and about six weeks to get ready.' },
   { title: 'Training Journal: Sold Out, and Marathon Plan B', url: '/journal/sold-out-marathon-plan-b/', date: 'November 27, 2026', blurb: 'The Black Friday deal is 15 percent off, but the Phoenix Marathon is sold out. Tucson on December 13, or wait for Vegas on January 10?' },
   { title: 'Training Journal: Turkey Trot 10 Miler and the Marathon Math', url: '/journal/turkey-trot-10-miler-and-the-marathon-math/', date: 'November 26, 2026', blurb: 'A slower 10 miler five days after a half marathon, a leg that finally felt right, and what it says about December 12.' },
   { title: 'Training Journal: Mostly Downs, and a Decision Rule', url: '/journal/mostly-downs-and-a-decision-rule/', date: 'November 24, 2026', blurb: 'A tight back, a skipped run, and a slower half marathon. Why the Thanksgiving Day run decides whether I race on December 12.' },
